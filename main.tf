@@ -4,7 +4,7 @@ terraform {
     organization = "JP-Lab"
 
     workspaces {
-      name = var.TF_WORKSPACE_NAME
+      name = "azure-resume"
     }
   }
 }
