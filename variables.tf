@@ -10,5 +10,5 @@ variable "LOCATION" {
 
 variable "STORAGE_ACCOUNT_NAME" {
   type = string
-  default = "jonathanpolanskyresumestorage"
+  default = "jpolanskyresume"
 }
