@@ -1,6 +1,6 @@
 variable "RESOURCE_GROUP_NAME" {
     type = string
-    default = "Resume"
+    default = "Az-Resume"
 }
 
 variable "LOCATION" {
