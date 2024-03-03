@@ -28,7 +28,7 @@ provider "azurerm" {
 }
 
 provider "cloudflare" {
-  api_token                = VAR.CLOUDFLARE_API_TOKEN
+  api_token                = var.CLOUDFLARE_API_TOKEN
 }
 
 resource "azurerm_resource_group" "resume" {
