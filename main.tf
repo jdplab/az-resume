@@ -80,7 +80,7 @@ resource "azurerm_cdn_endpoint_custom_domain" "resume" {
   cdn_endpoint_id          = azurerm_cdn_endpoint.resume.id
   host_name                = var.DOMAIN_NAME
     cdn_managed_https {
-      certificate_type     = "dedicated"
+      certificate_type     = "Dedicated"
       protocol_type        = "ServerNameIndication"
     }
 }
