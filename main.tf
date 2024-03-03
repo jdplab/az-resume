@@ -70,7 +70,7 @@ resource "azurerm_cdn_endpoint" "resume" {
 resource "cloudflare_record" "resume" {
   zone_id                  = var.CLOUDFLARE_ZONE_ID
   name                     = var.DOMAIN_NAME
-  value                    = azurerm_cdn_endpoint.resume.host_name
+  value                    = azurerm_cdn_endpoint.resume.origin_path
   type                     = "CNAME"
   proxied                  = true
 }
