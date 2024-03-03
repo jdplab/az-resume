@@ -39,15 +39,16 @@ resource "azurerm_storage_account" "resume" {
   }
 }
 
-resource "azurerm_cdn_frontdoor_profile" "resume" {
-  name                = "resume-cdn"
+resource "azurerm_cdn_profile" "resume" {
+  name                = "resume-cdn-profile"
   resource_group_name = azurerm_resource_group.resume.name
-  sku_name            = "Standard_AzureFrontDoor"
+  location            = azurerm_resource_group.resume.location
+  sku                 = "Standard_Microsoft"
 }
 
 resource "azurerm_cdn_endpoint" "resume" {
   name                = "resume-cdn-endpoint"
-  profile_name        = azurerm_cdn_frontdoor_profile.resume.name
+  profile_name        = azurerm_cdn_profile.resume.name
   resource_group_name = azurerm_resource_group.resume.name
   location            = azurerm_resource_group.resume.location
   origin_host_header  = azurerm_storage_account.resume.primary_web_endpoint
