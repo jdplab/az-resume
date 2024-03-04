@@ -134,7 +134,7 @@ resource "azurerm_application_insights" "resume" {
   application_type         = "web"
   }
 
-resource "azurerm_serviceplan" "resume" {
+resource "azurerm_service_plan" "resume" {
   name                     = "resumeappserviceplan"
   location                 = azurerm_resource_group.resume.location
   resource_group_name      = azurerm_resource_group.resume.name
@@ -146,7 +146,7 @@ resource "azurerm_linux_function_app" "resume" {
   name                     = "resumeapp"
   location                 = azurerm_resource_group.resume.location
   resource_group_name      = azurerm_resource_group.resume.name
-  service_plan_id          = azurerm_serviceplan.resume.id
+  service_plan_id          = azurerm_service_plan.resume.id
   storage_account_name     = azurerm_storage_account.resume.name
   storage_account_access_key = azurerm_storage_account.resume.primary_access_key
   https_only               = true
