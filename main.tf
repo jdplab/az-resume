@@ -72,7 +72,7 @@ resource "cloudflare_record" "resume" {
   name                     = var.DOMAIN_NAME
   value                    = azurerm_cdn_endpoint.resume.origin_path
   type                     = "CNAME"
-  proxied                  = true
+  proxied                  = false
 }
 
 resource "azurerm_cdn_endpoint_custom_domain" "resume" {
