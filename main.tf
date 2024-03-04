@@ -75,6 +75,14 @@ resource "cloudflare_record" "resume" {
   proxied                  = false
 }
 
+resource "cloudflare_record" "resume" {
+  zone_id                  = var.CLOUDFLARE_ZONE_ID
+  name                     = "cdnverify.${var.DOMAIN_NAME}"
+  value                    = "cdnverify.${azurerm_cdn_endpoint.resume.fqdn}"
+  type                     = "CNAME"
+  proxied                  = false
+}
+
 resource "azurerm_cdn_endpoint_custom_domain" "resume" {
   name                     = "resume-cdn-endpoint-custom-domain"
   cdn_endpoint_id          = azurerm_cdn_endpoint.resume.id
