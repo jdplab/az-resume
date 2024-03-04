@@ -143,7 +143,7 @@ resource "azurerm_service_plan" "resume" {
 }
 
 resource "azurerm_linux_function_app" "resume" {
-  name                     = "resumeapp"
+  name                     = "jpolanskyresume-functionapp"
   location                 = azurerm_resource_group.resume.location
   resource_group_name      = azurerm_resource_group.resume.name
   service_plan_id          = azurerm_service_plan.resume.id
