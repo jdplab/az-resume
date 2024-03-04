@@ -75,7 +75,7 @@ resource "cloudflare_record" "resume" {
   proxied                  = false
 }
 
-resource "cloudflare_record" "resume" {
+resource "cloudflare_record" "cdnverify" {
   zone_id                  = var.CLOUDFLARE_ZONE_ID
   name                     = "cdnverify.${var.DOMAIN_NAME}"
   value                    = "cdnverify.${azurerm_cdn_endpoint.resume.fqdn}"
