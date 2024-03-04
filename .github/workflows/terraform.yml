@@ -1,4 +1,4 @@
-name: 'Terraform'
+name: "Configure Resume Website"
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: "Terraform"
     runs-on: ubuntu-latest
 
     defaults:
@@ -28,8 +28,32 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Plan
-      run: terraform plan -input=false
-
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
+
+  Push_to_Azure_Storage:
+    name: "Push to Azure Storage"
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az storage blob upload-batch --overwrite --account-name "jpolanskyresume" --auth-mode key -d "$web" -s web
+
+    - name: Purge CDN endpoint
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az cdn endpoint purge --content-paths  "/*" --profile-name "resume-cdn-profile" --name "resume-cdn-endpoint" --resource-group "Az-Resume"
+
+    - name: logout
+      run: |
+            az logout
+      if: always()
