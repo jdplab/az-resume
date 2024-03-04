@@ -61,6 +61,7 @@ resource "azurerm_cdn_endpoint" "resume" {
   resource_group_name      = azurerm_resource_group.resume.name
   location                 = azurerm_resource_group.resume.location
   origin_host_header       = azurerm_storage_account.resume.primary_web_host
+    
     origin {
       name                 = "resume-origin"
       host_name            = azurerm_storage_account.resume.primary_web_host
@@ -87,6 +88,7 @@ resource "azurerm_cdn_endpoint_custom_domain" "resume" {
   name                     = "resume-cdn-endpoint-custom-domain"
   cdn_endpoint_id          = azurerm_cdn_endpoint.resume.id
   host_name                = var.DOMAIN_NAME
+    
     cdn_managed_https {
       certificate_type     = "Dedicated"
       protocol_type        = "ServerNameIndication"
@@ -104,6 +106,7 @@ resource "azurerm_cosmosdb_account" "resume" {
     location               = "eastus"
     failover_priority      = 0
   }
+  
   consistency_policy {
     consistency_level      = "Session"
   }
@@ -122,4 +125,40 @@ resource "azurerm_cosmosdb_sql_container" "resume" {
   database_name            = azurerm_cosmosdb_sql_database.resume.name
   partition_key_path       = "/id"
   throughput               = 400
+}
+
+resource "azurerm_application_insights" "resume" {
+  name                     = "resumeappinsights"
+  location                 = azurerm_resource_group.resume.location
+  resource_group_name      = azurerm_resource_group.resume.name
+  application_type         = "web"
+  }
+
+resource "azurerm_serviceplan" "resume" {
+  name                     = "resumeappserviceplan"
+  location                 = azurerm_resource_group.resume.location
+  resource_group_name      = azurerm_resource_group.resume.name
+  os_type                  = "Linux"
+  sku_name                 = "Y1"
+}
+
+resource "azurerm_linux_function_app" "resume" {
+  name                     = "resumeapp"
+  location                 = azurerm_resource_group.resume.location
+  resource_group_name      = azurerm_resource_group.resume.name
+  service_plan_id          = azurerm_serviceplan.resume.id
+  storage_account_name     = azurerm_storage_account.resume.name
+  storage_account_access_key = azurerm_storage_account.resume.primary_access_key
+  app_settings             = var.FUNCTION_APP_SETTINGS
+  https_only               = true
+
+  site_config {
+    linux_fx_version = "python|3.9"
+    application_insights_connection_string = azurerm_application_insights.resume.connection_string
+    application_insights_key = azurerm_application_insights.resume.instrumentation_key
+
+    application_stack {
+      python_version       = "3.9"
+    }
+  }
 }

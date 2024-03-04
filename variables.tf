@@ -30,3 +30,19 @@ variable "COSMOSDB_ACCOUNT_NAME" {
   type = string
   default = "resumedb1"
 }
+
+variable "COSMOSDB_URI" {
+  type = string
+  default = "https://resumedb1.documents.azure.com:443/"
+}
+
+variable "COSMOSDB_KEY" {
+  type = string
+}
+
+variable "FUNCTION_APP_SETTINGS" {
+  default = {
+    "FUNCTIONS_WORKER_RUNTIME" = "python"
+    "resumedb1_resumedb" = "AccountEndpoint=${COSMOSDB_URI};AccountKey=${COSMOSDB_KEY};"
+  }
+}
