@@ -39,10 +39,3 @@ variable "COSMOSDB_URI" {
 variable "COSMOSDB_KEY" {
   type = string
 }
-
-variable "FUNCTION_APP_SETTINGS" {
-  default = {
-    "FUNCTIONS_WORKER_RUNTIME" = "python"
-    "resumedb1_resumedb" = "AccountEndpoint=${COSMOSDB_URI};AccountKey=${COSMOSDB_KEY};"
-  }
-}

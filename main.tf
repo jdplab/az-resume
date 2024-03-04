@@ -149,8 +149,11 @@ resource "azurerm_linux_function_app" "resume" {
   service_plan_id          = azurerm_serviceplan.resume.id
   storage_account_name     = azurerm_storage_account.resume.name
   storage_account_access_key = azurerm_storage_account.resume.primary_access_key
-  app_settings             = var.FUNCTION_APP_SETTINGS
   https_only               = true
+  app_settings             = {
+    "FUNCTIONS_WORKER_RUNTIME" = "python"
+    "resumedb1_resumedb" = "AccountEndpoint=${COSMOSDB_URI};AccountKey=${COSMOSDB_KEY};"
+  }
 
   site_config {
     linux_fx_version = "python|3.9"
