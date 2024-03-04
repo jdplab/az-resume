@@ -152,7 +152,7 @@ resource "azurerm_linux_function_app" "resume" {
   https_only               = true
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
-    "resumedb1_resumedb" = "AccountEndpoint=${COSMOSDB_URI};AccountKey=${COSMOSDB_KEY};"
+    "resumedb1_resumedb" = "AccountEndpoint=${azurerm_cosmosdb_account.resume.endpoint};AccountKey=${azurerm_cosmosdb_account.resume.primary_key};"
   }
 
   site_config {

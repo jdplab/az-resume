@@ -30,12 +30,3 @@ variable "COSMOSDB_ACCOUNT_NAME" {
   type = string
   default = "resumedb1"
 }
-
-variable "COSMOSDB_URI" {
-  type = string
-  default = "https://resumedb1.documents.azure.com:443/"
-}
-
-variable "COSMOSDB_KEY" {
-  type = string
-}
