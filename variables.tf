@@ -25,3 +25,8 @@ variable "CLOUDFLARE_API_TOKEN" {
 variable "CLOUDFLARE_ZONE_ID" {
   type = string
 }
+
+variable "COSMOSDB_ACCOUNT_NAME" {
+  type = string
+  default = "resumedb1"
+}

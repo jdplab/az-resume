@@ -92,3 +92,34 @@ resource "azurerm_cdn_endpoint_custom_domain" "resume" {
       protocol_type        = "ServerNameIndication"
     }
 }
+
+resource "azurerm_cosmosdb_account" "resume" {
+  name                     = var.COSMOSDB_ACCOUNT_NAME
+  resource_group_name      = azurerm_resource_group.resume.name
+  location                 = azurerm_resource_group.resume.location
+  offer_type               = "Standard"
+  enable_free_tier         = true
+
+  geo_location {
+    location               = "eastus"
+    failover_priority      = 0
+  }
+  consistency_policy {
+    consistency_level      = "Session"
+  }
+}
+
+resource "azurerm_cosmosdb_sql_database" "resume" {
+  name                     = "resumedb"
+  resource_group_name      = azurerm_resource_group.resume.name
+  account_name             = azurerm_cosmosdb_account.resume.name
+}
+
+resource "azurerm_cosmosdb_sql_container" "resume" {
+  name                     = "resumecontainer"
+  resource_group_name      = azurerm_resource_group.resume.name
+  account_name             = azurerm_cosmosdb_account.resume.name
+  database_name            = azurerm_cosmosdb_sql_database.resume.name
+  partition_key_path       = "/id"
+  throughput               = 400
+}

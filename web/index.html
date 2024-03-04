@@ -10,4 +10,26 @@
     </head>
     <body>
         <h1>HTML is working</h1>
+        <p>Total visits: <b id="counter">Loading...</b></p>
     </body>
+    <script>
+        const localApi = 'http://localhost:7071/api/VisitorCounter';
+        const functionApi = "api_url_here";
+
+        const getVisitCount = () => {
+            let count = 30;
+            fetch(localApi)
+            .then(response => {
+                return response.json()
+            })
+            .then(response => {
+                console.log("Website called function API.");
+                count = response;
+                document.getElementById('counter').innerText = count;
+            }).catch(function(error) {
+                console.log(error);
+            });
+            return count;
+        };
+    </script>
+</html>
