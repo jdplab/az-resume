@@ -164,10 +164,4 @@ resource "azurerm_linux_function_app" "resume" {
       python_version       = "3.9"
     }
   }
-
-  lifecycle {
-    ignore_changes = [
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
-    ]
-  }
 }
