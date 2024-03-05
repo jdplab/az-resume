@@ -164,10 +164,21 @@ data "azurerm_storage_account_blob_container_sas" "functions" {
   }
 }
 
+resource "null_resource" "function_files" {
+  triggers = {
+    function_files_hash = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "find ./function -type f -exec md5sum {} \\; | sort -k 2 | md5sum"
+  }
+}
+
 data "archive_file" "resume" {
   type        = "zip"
   source_dir  = "./function"
   output_path = "${path.module}/function-app.zip"
+  depends_on  = [null_resource.function_files]
 }
 
 resource "azurerm_storage_blob" "functions" {
@@ -175,7 +186,7 @@ resource "azurerm_storage_blob" "functions" {
   storage_account_name     = azurerm_storage_account.resume.name
   storage_container_name   = azurerm_storage_container.functions.name
   type                     = "Block"
-  source                   = "${path.module}/function-app.zip"
+  source                   = data.archive_file.resume.output_path
 }
 
 resource "azurerm_linux_function_app" "resume" {
