@@ -188,7 +188,7 @@ resource "azurerm_linux_function_app" "resume" {
   https_only               = true
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
-    "resumedb1_resumedb"   = "AccountEndpoint=${azurerm_cosmosdb_account.resume.endpoint};AccountKey=${azurerm_cosmosdb_account.resume.primary_key};"
+    "COSMOSDBCONNECTIONSTRING"   = azurerm_cosmosdb_account.resume.connection_strings[0].connection_string
     "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.functions.name}${data.azurerm_storage_account_blob_container_sas.functions.sas}"
   }
 
