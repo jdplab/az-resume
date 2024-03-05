@@ -152,7 +152,8 @@ resource "azurerm_linux_function_app" "resume" {
   https_only               = true
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
-    "resumedb1_resumedb" = "AccountEndpoint=${azurerm_cosmosdb_account.resume.endpoint};AccountKey=${azurerm_cosmosdb_account.resume.primary_key};"
+    "resumedb1_resumedb"   = "AccountEndpoint=${azurerm_cosmosdb_account.resume.endpoint};AccountKey=${azurerm_cosmosdb_account.resume.primary_key};"
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
   }
 
   site_config {
@@ -162,5 +163,11 @@ resource "azurerm_linux_function_app" "resume" {
     application_stack {
       python_version       = "3.9"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
+    ]
   }
 }

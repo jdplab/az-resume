@@ -1,0 +1,37 @@
+{
+    "scriptFile": "visitorcount.py",
+    "disabled": false,
+    "bindings": [
+        {
+        "authLevel": "function",
+        "type": "httpTrigger",
+        "direction": "in",
+        "name": "req",
+        "methods": [
+          "get",
+          "post"
+        ]
+        },
+        {
+        "type": "http",
+        "direction": "out",
+        "name": "$return"
+        },
+        {
+        "name": "inputDocument",
+        "direction": "in",
+        "type": "cosmosDB",
+        "connectionStringSetting": "resumedb1_resumedb",
+        "databaseName": "resumedb",
+        "collectionName": "resumecontainer"
+        },
+        {
+        "name": "outputDocument",
+        "direction": "out",
+        "type": "cosmosDB",
+        "connectionStringSetting": "resumedb1_resumedb",
+        "databaseName": "resumedb",
+        "collectionName": "resumecontainer"
+        }
+    ]
+}
