@@ -166,11 +166,11 @@ data "azurerm_storage_account_blob_container_sas" "functions" {
 
 resource "null_resource" "function_files" {
   triggers = {
-    function_files_hash = "${timestamp()}"
+    function_files_hash = file("${path.module}/function_files_hash")
   }
 
   provisioner "local-exec" {
-    command = "find ${path.module}/function -type f -exec md5sum {} \\; | sort -k 2 | md5sum"
+    command = "find ${path.module}/function -type f -exec md5sum {} \\; | sort -k 2 | md5sum > ${path.module}/function_files_hash"
   }
 }
 
