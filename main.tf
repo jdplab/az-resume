@@ -148,7 +148,7 @@ resource "azurerm_storage_container" "functions" {
   container_access_type    = "private"
 }
 
-resource "azurerm_storage_account_blob_container_sas" "functions" {
+data "azurerm_storage_account_blob_container_sas" "functions" {
   connection_string        = azurerm_storage_account.resume.primary_connection_string
   container_name           = azurerm_storage_container.functions.name
   start                    = "2024-03-01T00:00:00Z"
@@ -170,7 +170,7 @@ data "archive_file" "resume" {
   output_path = "function-app.zip"
 }
 
-resource "azurerm_storage_blob" "function" {
+resource "azurerm_storage_blob" "functions" {
   name                     = "function-app.zip"
   storage_account_name     = azurerm_storage_account.resume.name
   storage_container_name   = azurerm_storage_container.functions.name
@@ -189,7 +189,7 @@ resource "azurerm_linux_function_app" "resume" {
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "resumedb1_resumedb"   = "AccountEndpoint=${azurerm_cosmosdb_account.resume.endpoint};AccountKey=${azurerm_cosmosdb_account.resume.primary_key};"
-    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.function.name}${azurerm_storage_account_blob_container_sas.functions.sas}"
+    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.functions.name}${azurerm_storage_account_blob_container_sas.functions.sas}"
   }
 
   site_config {
