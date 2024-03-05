@@ -1,0 +1,1 @@
+GIT_COMMIT_ID = "${github_sha}"
