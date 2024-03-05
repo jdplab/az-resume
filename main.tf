@@ -164,25 +164,14 @@ data "azurerm_storage_account_blob_container_sas" "functions" {
   }
 }
 
-resource "null_resource" "function_files" {
-  triggers = {
-    function_files_hash = file("${path.module}/function_files_hash")
-  }
-
-  provisioner "local-exec" {
-    command = "find ${path.module}/function -type f -exec md5sum {} \\; | sort -k 2 | md5sum > ${path.module}/function_files_hash"
-  }
-}
-
 data "archive_file" "resume" {
   type        = "zip"
   source_dir  = "${path.module}/function"
-  output_path = "${path.module}/function-app.zip"
-  depends_on  = [null_resource.function_files]
+  output_path = "${path.module}/function-app-${git_commit_id}.zip"
 }
 
 resource "azurerm_storage_blob" "functions" {
-  name                     = "function-app.zip"
+  name                     = "function-app-${git_commit_id}.zip"
   storage_account_name     = azurerm_storage_account.resume.name
   storage_container_name   = azurerm_storage_container.functions.name
   type                     = "Block"
@@ -200,7 +189,7 @@ resource "azurerm_linux_function_app" "resume" {
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "COSMOSDBCONNECTIONSTRING"   = azurerm_cosmosdb_account.resume.connection_strings[0]
-    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.functions.name}${data.azurerm_storage_account_blob_container_sas.functions.sas}"
+    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/function-app.zip${data.azurerm_storage_account_blob_container_sas.functions.sas}"
   }
 
   site_config {

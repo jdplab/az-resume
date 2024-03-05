@@ -30,3 +30,7 @@ variable "COSMOSDB_ACCOUNT_NAME" {
   type = string
   default = "resumedb1"
 }
+
+variable "git_commit_id" {
+  type = string
+}
