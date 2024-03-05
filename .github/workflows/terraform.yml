@@ -28,8 +28,5 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Plan
-      run: terraform plan
-
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var git_commit_id=${GITHUB_SHA}
+      run: terraform apply -auto-approve -var="git_commit_id=${GITHUB_SHA}"
