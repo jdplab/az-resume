@@ -29,4 +29,6 @@ jobs:
       run: terraform init
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="git_commit_id=${GITHUB_SHA}"
+      run: terraform apply -auto-approve -input=false
+      env:
+        GIT_COMMIT_ID: ${{ github.sha }}
