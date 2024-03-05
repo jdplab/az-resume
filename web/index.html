@@ -9,27 +9,29 @@
         <title>Document</title>
     </head>
     <body>
-        <h1>HTML is working</h1>
-        <p>Total visits: <b id="counter">Loading...</b></p>
+        <h1>Visitor Counter</h1>
+        <p>Total visits: <b id="total_visits">Loading...</b></p>
+        <p>Unique visitors: <b id="unique_visitors">Loading...</b></p>
+        <p>Your visits: <b id="visits">Loading...</b></p>
     </body>
     <script>
         const localApi = 'http://localhost:7071/api/VisitorCounter';
-        const functionApi = "api_url_here";
+        const functionApi = "https://jpolanskyresume-functionapp.azurewebsites.net/api/app";
 
         const getVisitCount = () => {
-            let count = 30;
-            fetch(localApi)
-            .then(response => {
-                return response.json()
-            })
-            .then(response => {
-                console.log("Website called function API.");
-                count = response;
-                document.getElementById('counter').innerText = count;
+            fetch(functionApi)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Unique visitors:', data.unique_visitors);
+                console.log('Total visits:', data.total_visits);
+                console.log('Visits:', data.visits);
+                document.getElementById('unique_visitors').innerText = data.unique_visitors;
+                document.getElementById('total_visits').innerText = data.total_visits;
+                document.getElementById('visits').innerText = data.visits;
             }).catch(function(error) {
                 console.log(error);
             });
-            return count;
+            return data;
         };
     </script>
 </html>
