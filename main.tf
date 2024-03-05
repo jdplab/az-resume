@@ -164,37 +164,21 @@ data "azurerm_storage_account_blob_container_sas" "functions" {
   }
 }
 
-resource "local_file" "function_json" {
-  filename = "${path.module}/function/app/function.json"
-  content  = file("${path.module}/function/app/function.json")
-}
+resource "null_resource" "function_files" {
+  triggers = {
+    function_files_hash = "${timestamp()}"
+  }
 
-resource "local_file" "visitorcount_py" {
-  filename = "${path.module}/function/app/visitorcount.py"
-  content  = file("${path.module}/function/app/visitorcount.py")
-}
-
-resource "local_file" "host_json" {
-  filename = "${path.module}/function/host.json"
-  content  = file("${path.module}/function/host.json")
-}
-
-resource "local_file" "package_json" {
-  filename = "${path.module}/function/package.json"
-  content  = file("${path.module}/function/package.json")
-}
-
-resource "local_file" "requirements_txt" {
-  filename = "${path.module}/function/requirements.txt"
-  content  = file("${path.module}/function/requirements.txt")
+  provisioner "local-exec" {
+    command = "find ${path.module}/function -type f -exec md5sum {} \\; | sort -k 2 | md5sum"
+  }
 }
 
 data "archive_file" "resume" {
   type        = "zip"
-  source_dir  = "./function"
+  source_dir  = "${path.module}/function"
   output_path = "${path.module}/function-app.zip"
-  depends_on  = [local_file.function_json, local_file.visitorcount_py, local_file.host_json, local_file.package_json, local_file.requirements_txt]
-}
+  depends_on  = [null_resource.function_files]
 
 resource "azurerm_storage_blob" "functions" {
   name                     = "function-app.zip"
