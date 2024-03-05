@@ -142,6 +142,42 @@ resource "azurerm_service_plan" "resume" {
   sku_name                 = "Y1"
 }
 
+resource "azurerm_storage_container" "functions" {
+  name                     = "functions"
+  storage_account_name     = azurerm_storage_account.resume.name
+  container_access_type    = "private"
+}
+
+resource "azurerm_storage_account_blob_container_sas" "functions" {
+  connection_string        = azurerm_storage_account.resume.primary_connection_string
+  container_name           = azurerm_storage_container.functions.name
+  start                    = "2024-03-01T00:00:00Z"
+  expiry                   = "2027-03-01T00:00:00Z"
+
+  permissions {
+    read                   = true
+    write                  = false
+    add                    = false
+    create                 = false
+    delete                 = false
+    list                   = false
+  }
+}
+
+data "archive_file" "resume" {
+  type        = "zip"
+  source_dir  = "./function"
+  output_path = "function-app.zip"
+}
+
+resource "azurerm_storage_blob" "function" {
+  name                     = "function-app.zip"
+  storage_account_name     = azurerm_storage_account.resume.name
+  storage_container_name   = azurerm_storage_container.functions.name
+  type                     = "Block"
+  source                   = "function-app.zip"
+}
+
 resource "azurerm_linux_function_app" "resume" {
   name                     = "jpolanskyresume-functionapp"
   location                 = azurerm_resource_group.resume.location
@@ -153,7 +189,7 @@ resource "azurerm_linux_function_app" "resume" {
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "resumedb1_resumedb"   = "AccountEndpoint=${azurerm_cosmosdb_account.resume.endpoint};AccountKey=${azurerm_cosmosdb_account.resume.primary_key};"
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.function.name}${azurerm_storage_account_blob_container_sas.functions.sas}"
   }
 
   site_config {
