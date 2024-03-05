@@ -179,6 +179,7 @@ data "archive_file" "resume" {
   source_dir  = "${path.module}/function"
   output_path = "${path.module}/function-app.zip"
   depends_on  = [null_resource.function_files]
+}
 
 resource "azurerm_storage_blob" "functions" {
   name                     = "function-app.zip"
