@@ -167,7 +167,7 @@ data "azurerm_storage_account_blob_container_sas" "functions" {
 data "archive_file" "resume" {
   type        = "zip"
   source_dir  = "./function"
-  output_path = "function-app.zip"
+  output_path = "${path.module}/function-app.zip"
 }
 
 resource "azurerm_storage_blob" "functions" {
@@ -175,7 +175,7 @@ resource "azurerm_storage_blob" "functions" {
   storage_account_name     = azurerm_storage_account.resume.name
   storage_container_name   = azurerm_storage_container.functions.name
   type                     = "Block"
-  source                   = "function-app.zip"
+  source                   = "${path.module}/function-app.zip"
 }
 
 resource "azurerm_linux_function_app" "resume" {
