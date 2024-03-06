@@ -197,6 +197,10 @@ resource "azurerm_linux_function_app" "resume" {
     "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.functions.name}${data.azurerm_storage_account_blob_container_sas.functions.sas}"
   }
 
+  output "COSMOSDBCONNECTIONSTRING" {
+    value = "${azurerm_cosmosdb_account.resume.connection_strings[0]}"
+  }
+
   site_config {
     application_insights_connection_string = azurerm_application_insights.resume.connection_string
     application_insights_key = azurerm_application_insights.resume.instrumentation_key
