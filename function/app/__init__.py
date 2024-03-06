@@ -5,7 +5,10 @@ import json
 def main(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocument: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    ip_address = req.headers.get('X-Forwarded-For', req.remote_addr)
+    ip_address = req.headers.get('X-Forwarded-For')
+    if ip_address is None:
+        raise Exception('X-Forwarded-For header not found in request')
+
 
     doc = next((doc for doc in inputDocument if doc['id'] == ip_address), None)
 
