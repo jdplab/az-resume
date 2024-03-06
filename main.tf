@@ -164,10 +164,6 @@ data "azurerm_storage_account_blob_container_sas" "functions" {
   }
 }
 
-variable "GIT_COMMIT_ID" {
-  type = string
-}
-
 data "archive_file" "resume" {
   type        = "zip"
   source_dir  = "${path.module}/function"
