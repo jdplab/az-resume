@@ -190,6 +190,7 @@ resource "azurerm_linux_function_app" "resume" {
   storage_account_name     = azurerm_storage_account.resume.name
   storage_account_access_key = azurerm_storage_account.resume.primary_access_key
   https_only               = true
+  builtin_logging_enabled  = false
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "COSMOSDBCONNECTIONSTRING"   = azurerm_cosmosdb_account.resume.connection_strings[0]
