@@ -31,6 +31,4 @@ jobs:
     - name: Terraform Apply
       env:
         GIT_COMMIT_ID: ${{ github.sha }}
-      run: |
-        export TF_VARS_GIT_COMMIT_ID=${GIT_COMMIT_ID}
-        terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -input=false -var GIT_COMMIT_ID=GIT_COMMIT_ID
