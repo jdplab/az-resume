@@ -9,7 +9,6 @@ def main(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocument
     if ip_address is None:
         raise Exception('X-Forwarded-For header not found in request')
 
-
     doc = next((doc for doc in inputDocument if doc['id'] == ip_address), None)
 
     if doc is None:
