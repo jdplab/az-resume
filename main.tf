@@ -66,6 +66,19 @@ resource "azurerm_cdn_endpoint" "resume" {
       name                 = "resume-origin"
       host_name            = azurerm_storage_account.resume.primary_web_host
     }
+
+    global_delivery_rule {
+
+      request_scheme_condition {
+        operator           = "Equal"
+        match_values       = ["HTTP"]
+      }
+
+      url_redirect_action {
+        redirect_type      = "Found"
+        protocol           = "HTTPS"
+      }
+    }
 }
 
 resource "cloudflare_record" "resume" {
