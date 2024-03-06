@@ -194,7 +194,7 @@ resource "azurerm_linux_function_app" "resume" {
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "COSMOSDBCONNECTIONSTRING"   = azurerm_cosmosdb_account.resume.connection_strings[0]
-    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/function-app.zip${data.azurerm_storage_account_blob_container_sas.functions.sas}"
+    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.functions.name}${data.azurerm_storage_account_blob_container_sas.functions.sas}"
   }
 
   site_config {
