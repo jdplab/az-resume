@@ -204,5 +204,9 @@ resource "azurerm_linux_function_app" "resume" {
     application_stack {
       python_version       = "3.9"
     }
+
+    cors {
+      allowed_origins      = ["https://${var.DOMAIN_NAME}"]
+    }
   }
 }

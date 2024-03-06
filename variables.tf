@@ -30,7 +30,3 @@ variable "COSMOSDB_ACCOUNT_NAME" {
   type = string
   default = "resumedb1"
 }
-
-variable "COSMOSDB_PRIMARYCONNECTIONSTRING" {
-  type = string
-}
