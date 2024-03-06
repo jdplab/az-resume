@@ -78,7 +78,7 @@ resource "azurerm_cdn_endpoint" "resume" {
 
       url_redirect_action {
         redirect_type      = "Found"
-        protocol           = "HTTPS"
+        protocol           = "Https"
       }
     }
 }
