@@ -5,7 +5,8 @@ import json
 def main(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocument: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    ip_address = req.headers.get('X-Forwarded-For')
+    xforwardedfor = req.headers.get('X-Forwarded-For')
+    ip_address = xforwardedfor.split(":")[0]
     if ip_address is None:
         raise Exception('X-Forwarded-For header not found in request')
 
@@ -14,10 +15,15 @@ def main(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocument
     if doc is None:
         logging.info('No visitors value found in CosmosDB for this IP. Creating it now.')
         data = {'id': ip_address, 'visits': 1}
+        inputDocument.append(data)
     else:
         logging.info('Visitors value found in CosmosDB for this IP. Incrementing it now.')
         data = doc.to_dict()
         data['visits'] += 1
+        for doc in inputDocument:
+            if doc['id'] == ip_address:
+                doc['visits'] = data['visits']
+                break
 
     unique_visitors = len(set(doc['id'] for doc in inputDocument))
     total_visits = sum(doc['visits'] for doc in inputDocument)
