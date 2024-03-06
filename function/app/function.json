@@ -21,7 +21,7 @@
         "name": "inputDocument",
         "direction": "in",
         "type": "cosmosDB",
-        "connectionStringSetting": "COSMOSDBCONNECTIONSTRING",
+        "connectionStringSetting": "resumedb1_DOCUMENTDB",
         "databaseName": "resumedb",
         "collectionName": "resumecontainer"
         },
@@ -29,7 +29,7 @@
         "name": "outputDocument",
         "direction": "out",
         "type": "cosmosDB",
-        "connectionStringSetting": "COSMOSDBCONNECTIONSTRING",
+        "connectionStringSetting": "resumedb1_DOCUMENTDB",
         "databaseName": "resumedb",
         "collectionName": "resumecontainer"
         }
