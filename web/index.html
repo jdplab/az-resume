@@ -17,9 +17,9 @@
     <script>
         const localApi = 'http://localhost:7071/api/VisitorCounter';
         const functionApi = "https://jpolanskyresume-functionapp.azurewebsites.net/api/app?code=d1xF9BS-fJnjY0zcXgafkMnIFYgXguGZD6MrvVFPR6eEAzFuTY1uxA==";
-
+    
         const getVisitCount = () => {
-            fetch(functionApi)
+            return fetch(functionApi)
             .then(response => response.json())
             .then(data => {
                 console.log('Unique visitors:', data.unique_visitors);
@@ -31,7 +31,6 @@
             }).catch(function(error) {
                 console.log(error);
             });
-            return data;
         };
         getVisitCount();
     </script>
