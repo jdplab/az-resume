@@ -67,7 +67,9 @@ resource "azurerm_cdn_endpoint" "resume" {
       host_name            = azurerm_storage_account.resume.primary_web_host
     }
 
-    global_delivery_rule {
+    delivery_rule {
+      name                 = "RedirectToHTTPS"
+      order                = 1
 
       request_scheme_condition {
         operator           = "Equal"
