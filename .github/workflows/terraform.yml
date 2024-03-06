@@ -22,7 +22,7 @@ jobs:
       
     - name: Update variables.auto.tfvars
       run: |
-        echo -e "GIT_COMMIT_ID = "${{ github.sha }}"\n" > variables.auto.tfvars
+        echo "GIT_COMMIT_ID = \"${{ github.sha }}\"" > variables.auto.tfvars
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
