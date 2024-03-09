@@ -2572,6 +2572,23 @@ input, select, textarea {
 			margin: 0;
 		}
 
+/* Project Item */
+
+	.project-item {
+		text-align: justify;
+	}
+	
+	.project-item p {
+		display: inline-block;
+		width: 100%;
+	}
+
+/* Skill Item */
+
+	.skill-item {
+		text-align: center;
+	}
+
 /* Header */
 
 	#header {
