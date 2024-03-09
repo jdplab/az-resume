@@ -168,14 +168,14 @@
 							<div class="col-8 col-12-small">
 								<form method="post" action="https://formspree.io/f/myyrpeke">
 									<div class="row gtr-uniform gtr-50">
-										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
-										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
-										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4"></textarea></div>
+										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" required/></div>
+										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" required/></div>
+										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4" required></textarea></div>
 									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send Message" /></li>
+									</ul>
 								</form>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
 							</div>
 							<div class="col-4 col-12-small">
 								<ul class="labeled-icons">
@@ -521,9 +521,9 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<footer id="footer">
 				<div class="inner">
 					<ul class="icons">
-						<li><a href="https://www.linkedin.com/in/jonathandpolansky/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-						<li><a href="https://github.com/jdplab" class="icon brands fa-github"><span class="label">Github</span></a></li>
-						<li><a href="mailto:jon@jon-polansky.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+						<li><a href="https://www.linkedin.com/in/jonathandpolansky/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+						<li><a href="https://github.com/jdplab" class="icon brands fa-github" target="_blank"><span class="label">Github</span></a></li>
+						<li><a href="mailto:jon@jon-polansky.com" class="icon solid fa-envelope" target="_blank"><span class="label">Email</span></a></li>
 					</ul>
 					<ul class="visitorcount">
 						<li><span>Your Visits: <b id="visits">Loading...</b></span></li>

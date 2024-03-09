@@ -1,4 +1,4 @@
-const functionApi = "https://jpolanskyresume-functionapp.azurewebsites.net/api/app";
+const functionApi = "https://jpolanskyresume-functionapp.azurewebsites.net/api/visitorcount";
 const testApi = "url";
     const getVisitCount = () => {
         return fetch(functionApi)
