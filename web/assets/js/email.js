@@ -4,7 +4,7 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
     const formData = new FormData(this);
 
     try {
-        const response = await fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/sendemail?', {
+        const response = await fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/sendemail', {
             method: 'POST',
             body: formData
         });
