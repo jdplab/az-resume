@@ -1,0 +1,29 @@
+{
+    "scriptFile": "__init__.py",
+    "bindings": [
+        {
+        "authLevel": "anonymous",
+        "type": "httpTrigger",
+        "direction": "in",
+        "name": "req",
+        "methods": [
+          "get",
+          "post"
+        ]
+        },
+        {
+        "type": "http",
+        "direction": "out",
+        "name": "$return"
+        },
+        {
+            "type": "sendGrid",
+            "name": "sendGridMessage",
+            "direction": "out",
+            "apiKey": "SENDGRID_API_KEY",
+            "from": "jon@jon-polansky.com",
+            "to": "jon@jon-polansky.com",
+            "subject": "Jon-Polansky.com Form Submission"
+        }
+    ]
+}

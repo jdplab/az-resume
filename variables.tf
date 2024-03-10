@@ -30,3 +30,7 @@ variable "COSMOSDB_ACCOUNT_NAME" {
   type = string
   default = "resumedb1"
 }
+
+variable "SENDGRID_API_KEY" {
+  type = string
+}
