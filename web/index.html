@@ -17,6 +17,25 @@
 	</head>
 	<body class="is-preload">
 
+		<!-- Navbar -->
+		<div id="navbar">
+			<div class="navbar-container">
+				<nav id="nav">
+					<div href="#" id="iconborder" onclick="toggleMenu()">
+						<div id="iconcolor">
+							<a class="icon" onclick="event.stopPropagation(); toggleMenu()"><i class="fas fa-bars"></i></a>
+						</div>
+					</div>
+					<div id="links">
+						<a href="#projects">Projects</a>
+						<a href="#skills">Skills</a>
+						<a href="#experience">Experience</a>
+						<a href="#contact">Contact</a>
+					</div>
+				</nav>
+			</div>
+		</div>
+
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
@@ -37,16 +56,6 @@
 							than tinkering with technology.</h2>
 						</header>
 						<p>This website is a testament to that. As a personal project, I transformed my resume from a traditional document into an interactive website. Initially deployed locally on a virtual machine, it evolved into a serverless architecture hosted on Azure. Please be sure to check back in often as it is constantly evolving. You can explore the original version <a href="https://resume-prod.jon-polansky.com/" target="_blank">here</a>, or you can keep scrolling to learn more about me.</p>
-						<div class="row">
-							<div class="col-6 col-12-small">
-								<ul class="actions small">
-									<li><a href="#projects" class="button small">Projects</a></li>
-									<li><a href="#skills" class="button small">Skills</a></li>
-									<li><a href="#experience" class="button small">Work Experience</a></li>
-									<li><a href="#contact" class="button small">Contact</a></li>
-								</ul>
-							</div>
-						</div>
 					</section>
 
 				<!-- Two -->
@@ -196,6 +205,12 @@
 							</div>
 						</div>
 					</section>
+					<div id="emailSuccessOrFail" class="modal">
+						<div class="modal-content">
+							<span class="close">&times;</span>
+							<p id="emailMessage"></p>
+						</div>
+					</div>
 
 				<!-- Four -->
 				
@@ -539,6 +554,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
+			<script src="assets/js/menu.js"></script>
 			<script src="assets/js/scroll.js"></script>
 			<script src="assets/js/email.js"></script>
 			<script src="assets/js/visitorcount.js"></script>
