@@ -283,7 +283,7 @@ input, select, textarea {
 
 /* Navbar */
 
-  @media screen and (min-width: 981px) {
+  @media screen and (min-width: 551px) {
 	#navbar {
 		background-color: #fff;
 		position: fixed;
@@ -331,7 +331,7 @@ input, select, textarea {
 	}
   }
 
-  @media screen and (max-width: 980px) {
+  @media screen and (max-width: 550px) {
   
 	#navbar {
 		background-color: transparent;
@@ -348,8 +348,8 @@ input, select, textarea {
 		float: right;
 		justify-content: center;
     	align-items: center;
-		border-bottom: solid 3px #efefef;
-		border-left: solid 3px #efefef;
+		border-bottom: solid 3px #cccccc;
+		border-left: solid 3px #cccccc;
 		border-bottom-left-radius: 1em;
 		overflow: hidden;
 		width: 3em;
@@ -361,25 +361,21 @@ input, select, textarea {
 		display: flex;
     	justify-content: center;
     	align-items: center;
-		background-color: #797979;
+		background-color: #fff;
 		width: 100%
 	}
 
 	#navbar .icon {
 	  display: block;
-	  color: #fff;
+	  color: #bbbbbb;
 	}
 
 	#navbar #iconborder:hover .icon {
 		color: #49bf9d;
 	}
 
-	#navbar #iconborder.active .icon {
-		color: #49bf9d;
-	}
-
 	#navbar #iconborder.active {
-		width: 5em;
+		width: 10em;
 		border-bottom-left-radius: 0;
 		transition: width 0.25s ease-in-out;
 	}
@@ -417,31 +413,31 @@ input, select, textarea {
 	}
 	
 	#links.animate-in a:nth-child(2) {
-		animation-delay: 0.2s;
+		animation-delay: 0.15s;
 	}
 	
 	#links.animate-in a:nth-child(3) {
-		animation-delay: 0.3s;
+		animation-delay: 0.2s;
 	}
 	
 	#links.animate-in a:nth-child(4) {
-		animation-delay: 0.4s;
+		animation-delay: 0.25s;
 	}
 	
 	#links.animate-in a {
-		animation: slideIn 0.5s ease forwards;
+		animation: slideIn 0.3s ease forwards;
 	}
 
 	#links a {
 		display: block;
-		color: #fff;
+		color: #aaaaaa;
 		cursor: pointer;
 		text-align: center;
 		text-decoration: none;
-		border-bottom: none;
-		background-color: #797979;
-		border-left: solid 3px #efefef; 
-		width: 5em;
+		border-bottom: solid 1px #cccccc;
+		background-color: #fff;
+		border-left: solid 3px #cccccc; 
+		width: 10em;
 		-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
