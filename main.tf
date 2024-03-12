@@ -169,7 +169,6 @@ resource "azurerm_key_vault" "resume" {
       certificate_permissions = [
         "Get",
         "List",
-        "Set",
         "Delete",
         "Update",
         "Import",
