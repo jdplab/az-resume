@@ -85,7 +85,7 @@ resource "azurerm_cdn_endpoint" "resume" {
 
 resource "cloudflare_record" "resume" {
   zone_id                  = var.CLOUDFLARE_ZONE_ID
-  name                     = var.DOMAIN_NAME
+  name                     = "@"
   value                    = azurerm_cdn_endpoint.resume.fqdn
   type                     = "CNAME"
   proxied                  = false
