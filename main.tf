@@ -20,6 +20,16 @@ terraform {
       source               = "cloudflare/cloudflare"
       version              = "4.25.0"
     }
+
+    azuread = {
+      source               = "hashicorp/azuread"
+      version              = "2.47.0"
+    }
+
+    acme = {
+      source = "vancluever/acme"
+      version = "2.21.0"
+    }
   }
 }
 
@@ -29,6 +39,13 @@ provider "azurerm" {
 
 provider "cloudflare" {
   api_token                = var.CLOUDFLARE_API_TOKEN
+}
+
+provider "azuread" {
+}
+
+provider "acme" {
+  server_url = "https://acme-v02.api.letsencrypt.org/directory"
 }
 
 resource "azurerm_resource_group" "resume" {
@@ -83,20 +100,136 @@ resource "azurerm_cdn_endpoint" "resume" {
     }
 }
 
+data "azuread_client_config" "current" {}
+
+resource "azuread_application" "letsencrypt" {
+  display_name = "letsencrypt"
+}
+
+resource "azuread_service_principal" "letsencrypt" {
+  client_id = azuread_application.letsencrypt.application_id
+}
+
+resource "time_rotating" "monthly" {
+  rotation_days = 30
+}
+
+resource "azuread_service_principal_password" "letsencrypt" {
+  service_principal_id = azuread_service_principal.letsencrypt.object_id
+  rotate_when_changed = {
+    rotation = time_rotating.monthly.id
+  }
+}
+
+resource "tls_private_key" "private_key" {
+  algorithm = "RSA"
+}
+
+resource "acme_registration" "me" {
+  account_key_pem = tls_private_key.private_key.private_key_pem
+  email_address   = var.EMAIL_ADDRESS
+}
+
+resource "azuread_service_principal" "cdn" {
+  client_id           = "205478c0-bd83-4e1b-a9d6-db63a3e1e1c8"
+}
+
+resource "azurerm_key_vault" "resume" {
+  name                     = "resume-key-vault"
+  resource_group_name      = azurerm_resource_group.resume.name
+  location                 = azurerm_resource_group.resume.location
+  enabled_for_disk_encryption = true
+  enabled_for_deployment   = true
+  tenant_id                = data.azurerm_client_config.current.tenant_id
+  sku_name                 = "standard"
+
+  access_policy {
+    tenant_id              = data.azurerm_client_config.current.tenant_id
+    object_id              = azuread_service_principal.cdn.object_id
+
+    secret_permissions        = [
+      "Get",
+    ]
+
+    certificate_permissions   = [
+      "Get",
+    ]
+  }
+    access_policy {
+      tenant_id              = data.azurerm_client_config.current.tenant_id
+      object_id              = data.azuread_client_config.current.object_id
+
+      secret_permissions      = [
+        "Get",
+        "List",
+        "Set",
+        "Delete",
+      ]
+
+      certificate_permissions = [
+        "Get",
+        "List",
+        "Set",
+        "Delete",
+        "Update",
+        "Import",
+        "Purge",
+        "Recover",
+        "Create",
+      ]
+
+      key_permissions         = [
+        "Create",
+        "Delete",
+        "Get",
+        "Import",
+        "List",
+        "Sign",
+        "Update",
+        "Verify",
+        "Rotate",
+      ]
+    
+    storage_permissions       = [
+        "Get",
+        "List",
+        "Set",
+        "Delete",
+        "Update",
+    ]
+    }
+  
+}
+
 resource "cloudflare_record" "resume" {
   zone_id                  = var.CLOUDFLARE_ZONE_ID
-  name                     = "@"
+  name                     = var.DOMAIN_NAME
   value                    = azurerm_cdn_endpoint.resume.fqdn
   type                     = "CNAME"
   proxied                  = false
 }
 
-resource "cloudflare_record" "cdnverify" {
-  zone_id                  = var.CLOUDFLARE_ZONE_ID
-  name                     = "cdnverify.${var.DOMAIN_NAME}"
-  value                    = "cdnverify.${azurerm_cdn_endpoint.resume.fqdn}"
-  type                     = "CNAME"
-  proxied                  = false
+resource "acme_certificate" "resume" {
+  account_key_pem          = acme_registration.me.account_key_pem
+  email                    = var.EMAIL_ADDRESS
+  common_name              = var.DOMAIN_NAME
+  key_type                 = "2048"
+  dns_challenge {
+    provider               = "cloudflare"
+    config = {
+      CF_ZONE_API_TOKEN     = var.CLOUDFLARE_API_TOKEN
+      CF_DNS_API_TOKEN     = var.CLOUDFLARE_API_TOKEN
+      CLOUDFLARE_HTTP_TIMEOUT = "300"
+    }
+  }
+}
+
+resource "azurerm_key_vault_certificate" "resume" {
+  name                     = replace(acme_certificate.resume.common_name, ".", "-")
+  key_vault_id             = azurerm_key_vault.resume.id
+  certificate {
+    contents               = acme_certificate.resume.certificate_p12
+  }
 }
 
 resource "azurerm_cdn_endpoint_custom_domain" "resume" {
@@ -104,9 +237,8 @@ resource "azurerm_cdn_endpoint_custom_domain" "resume" {
   cdn_endpoint_id          = azurerm_cdn_endpoint.resume.id
   host_name                = var.DOMAIN_NAME
     
-    cdn_managed_https {
-      certificate_type     = "Dedicated"
-      protocol_type        = "ServerNameIndication"
+    user_managed_https {
+      key_vault_certificate_id = azurerm_key_vault_certificate.resume.id
     }
 }
 

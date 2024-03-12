@@ -18,6 +18,11 @@ variable "DOMAIN_NAME" {
   default = "jon-polansky.com"
 }
 
+variable "EMAIL_ADDRESS" {
+  type = string
+  default = "jon@jon-polansky.com"
+}
+
 variable "CLOUDFLARE_API_TOKEN" {
   type = string
 }
