@@ -20,6 +20,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Update variables.auto.tfvars
+      run: |
+        echo "GIT_COMMIT_ID = \"${{ github.sha }}\"" > variables.auto.tfvars
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
