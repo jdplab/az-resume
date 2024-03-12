@@ -208,6 +208,14 @@ resource "cloudflare_record" "resume" {
   proxied                  = false
 }
 
+resource "cloudflare_record" "cdnverify" {
+  zone_id                  = var.CLOUDFLARE_ZONE_ID
+  name                     = "cdnverify.${var.DOMAIN_NAME}"
+  value                    = "cdnverify.${azurerm_cdn_endpoint.resume.fqdn}"
+  type                     = "CNAME"
+  proxied                  = false
+}
+
 resource "acme_certificate" "resume" {
   account_key_pem          = acme_registration.me.account_key_pem
   common_name              = var.DOMAIN_NAME
@@ -236,7 +244,7 @@ resource "azurerm_cdn_endpoint_custom_domain" "resume" {
   host_name                = var.DOMAIN_NAME
     
     user_managed_https {
-      key_vault_certificate_id = azurerm_key_vault_certificate.resume.id
+      key_vault_secret_id = azurerm_key_vault_certificate.resume.id
     }
 }
 
