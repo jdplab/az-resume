@@ -107,7 +107,7 @@ resource "azuread_application" "letsencrypt" {
 }
 
 resource "azuread_service_principal" "letsencrypt" {
-  client_id = azuread_application.letsencrypt.application_id
+  client_id = azuread_application.letsencrypt.client_id
 }
 
 resource "time_rotating" "monthly" {
@@ -140,11 +140,11 @@ resource "azurerm_key_vault" "resume" {
   location                 = azurerm_resource_group.resume.location
   enabled_for_disk_encryption = true
   enabled_for_deployment   = true
-  tenant_id                = data.azurerm_client_config.current.tenant_id
+  tenant_id                = data.azuread_client_config.current.tenant_id
   sku_name                 = "standard"
 
   access_policy {
-    tenant_id              = data.azurerm_client_config.current.tenant_id
+    tenant_id              = data.azuread_client_config.current.tenant_id
     object_id              = azuread_service_principal.cdn.object_id
 
     secret_permissions        = [
@@ -156,7 +156,7 @@ resource "azurerm_key_vault" "resume" {
     ]
   }
     access_policy {
-      tenant_id              = data.azurerm_client_config.current.tenant_id
+      tenant_id              = data.azuread_client_config.current.tenant_id
       object_id              = data.azuread_client_config.current.object_id
 
       secret_permissions      = [
@@ -211,7 +211,6 @@ resource "cloudflare_record" "resume" {
 
 resource "acme_certificate" "resume" {
   account_key_pem          = acme_registration.me.account_key_pem
-  email                    = var.EMAIL_ADDRESS
   common_name              = var.DOMAIN_NAME
   key_type                 = "2048"
   dns_challenge {
