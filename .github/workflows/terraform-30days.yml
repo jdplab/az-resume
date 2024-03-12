@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Terraform - Every 30 Days"
 
 on:
   schedule:
