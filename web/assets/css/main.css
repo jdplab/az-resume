@@ -283,7 +283,7 @@ input, select, textarea {
 
 /* Navbar */
 
-  @media screen and (min-width: 551px) {
+  @media screen and (min-width: 981px) {
 	#navbar {
 		background-color: #fff;
 		position: fixed;
@@ -331,7 +331,7 @@ input, select, textarea {
 	}
   }
 
-  @media screen and (max-width: 550px) {
+  @media screen and (max-width: 980px) {
   
 	#navbar {
 		background-color: transparent;
