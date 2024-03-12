@@ -130,8 +130,8 @@ resource "acme_registration" "me" {
   email_address   = var.EMAIL_ADDRESS
 }
 
-resource "azuread_service_principal" "cdn" {
-  client_id           = "205478c0-bd83-4e1b-a9d6-db63a3e1e1c8"
+data "azuread_service_principal" "cdn" {
+  client_id           = "42be5038-638b-4f77-b0c9-2d0618e86204"
 }
 
 resource "azurerm_key_vault" "resume" {
@@ -145,7 +145,7 @@ resource "azurerm_key_vault" "resume" {
 
   access_policy {
     tenant_id              = data.azuread_client_config.current.tenant_id
-    object_id              = azuread_service_principal.cdn.object_id
+    object_id              = data.azuread_service_principal.cdn.object_id
 
     secret_permissions        = [
       "Get",
