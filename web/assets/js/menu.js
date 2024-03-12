@@ -27,9 +27,13 @@ document.addEventListener('click', function(event) {
 window.addEventListener('resize', function() {
     var iconborder = document.getElementById('iconborder');
     var links = document.getElementById("links");
+    var width = window.innerWidth;
     if (iconborder.classList.contains('active')) {
         links.style.visibility = 'hidden';
         iconborder.classList.remove('active');
         links.classList.remove('animate', 'animate-in');
+    }
+    if (width > 736) {
+        links.style.visibility = 'visible';
     }
 });

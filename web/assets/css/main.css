@@ -241,6 +241,10 @@ input, select, textarea {
 		text-align: right;
 	}
 
+	#message {
+		resize: vertical;
+	}
+
 /* Modal */
 
 	.modal {
@@ -331,7 +335,55 @@ input, select, textarea {
 	}
   }
 
-  @media screen and (max-width: 980px) {
+  @media screen and (min-width: 737px) and (max-width: 980px){
+	#navbar {
+		background-color: #fff;
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 100%;
+		overflow: hidden;
+		z-index: 1;
+		border-bottom: solid 3px #efefef;
+	  }
+	  
+	#navbar nav {
+		display: flex;
+		justify-content: space-around; /* distribute the items evenly with equal space around them */
+		width: 100%; /* make the nav element take up the full width of the navbar */
+	}
+
+	#navbar #links {
+		display: flex;
+		justify-content: space-around; /* distribute the items evenly with equal space around them */
+		width: 100%;
+	}
+	
+	#navbar a {
+		display: block;
+		color: #787878;
+		cursor: pointer;
+		text-align: center;
+		padding: .5em .5em;
+		text-decoration: none;
+		border-bottom: none;
+		-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+	}
+
+	#navbar a:hover {
+		background-color: #ddd;
+		color: #49bf9d;
+	  }
+
+	#navbar .icon {
+		display: none;
+	}
+  }
+
+  @media screen and (max-width: 736px) {
   
 	#navbar {
 		background-color: transparent;
@@ -445,7 +497,7 @@ input, select, textarea {
 	}
 
 	#links a:last-of-type {
-		border-bottom: solid 3px #efefef;
+		border-bottom: solid 3px #cccccc;
 		border-bottom-left-radius: 1em;
 	}
 
@@ -455,6 +507,33 @@ input, select, textarea {
 	  }
 	
   }
+
+/* Experience */
+
+ul.jobtitle {
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: flex;
+	justify-content: space-between;
+	cursor: default;
+	list-style: none;
+	margin-left: -1em;
+	padding-left: 0;
+}
+
+	ul.jobtitle li {
+		padding: 0 0 0 1em;
+		vertical-align: middle;
+	}
+
+	ul.jobtitle h3 {
+		margin-bottom: 0;
+	}
+
+	ul.jobtitle:first-of-type {
+		margin-bottom: 0;
+	}
 
 /* Container */
 

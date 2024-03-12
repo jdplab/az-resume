@@ -15,7 +15,7 @@ variable "STORAGE_ACCOUNT_NAME" {
 
 variable "DOMAIN_NAME" {
   type = string
-  default = "azureresume.jon-polansky.com"
+  default = "jon-polansky.com"
 }
 
 variable "CLOUDFLARE_API_TOKEN" {

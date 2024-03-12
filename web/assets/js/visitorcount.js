@@ -1,7 +1,7 @@
 const functionApi = "https://jpolanskyresume-functionapp.azurewebsites.net/api/visitorcount";
 const testApi = "url";
     const getVisitCount = () => {
-        return fetch(functionApi)
+        return fetch(testApi)
         .then(response => response.json())
         .then(data => {
             document.getElementById('unique_visitors').innerText = data.unique_visitors;
