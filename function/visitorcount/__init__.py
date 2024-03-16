@@ -1,7 +1,6 @@
 import azure.functions as func
 import logging
 import json
-import response
 
 def main(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocument: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -10,7 +9,7 @@ def main(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocument
     if ip_address is None:
         raise Exception('X-Forwarded-For header not found in request')
 
-    repeatVisit = response.request.params['repeatVisit']
+    repeatVisit = req.params.get('repeatVisit')
 
     doc = next((doc for doc in inputDocument if doc['id'] == ip_address), None)
 
