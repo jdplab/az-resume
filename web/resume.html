@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<!--
+	Strata by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+	<head>
+		<title>Jonathan Polansky Resume</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta http-equiv="content-type" content="text/html"/>
+		<meta name="keywords" content="resume,polansky,jonathanpolansky,azure,cloud,devops"/>
+		<meta name="description" content="Jonathan Polansky's resume. https://github.com/jdplab/az-resume"/>
+		<link rel="icon" href="images/terminal.ico">
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Navbar -->
+		<div id="navbar">
+			<div class="navbar-container">
+				<nav id="nav">
+					<div href="#" id="iconborder" onclick="toggleMenu()">
+						<div id="iconcolor">
+							<a class="icon" onclick="event.stopPropagation(); toggleMenu()"><i class="fa fa-bars"></i></a>
+						</div>
+					</div>
+					<div id="links">
+						<a href="index.html">Main</a>
+						<a href="blogindex.html">Blog</a>
+						<a id="scrollToTop">Resume</a>
+						<a href="index.html#contact">Contact</a>
+						<a href="#experience">Login</a>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="https://linkedin.com/in/jonathandpolansky" class="image avatar" target="_blank"><img src="images/avatar.jpg" alt="" /></a>
+					<h1>I am <strong>Jonathan Polansky</strong>, <br />
+					a passionate IT professional <br />
+					and problem solver.</h1>
+				</div>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Two -->
+					<section id="projects">
+						<h2>Projects</h2>
+						<div class="row">
+							<article class="col-6 col-12-xsmall work-item project-item">
+								<a href="https://github.com/jdplab/local-resume" target="_blank" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="" /></a>
+								<h3>Self-Hosted Resume Website</h3>
+								<p>This project focused on developing and deploying a self-hosted resume website, integrating Jenkins, Terraform, and Ansible for automation. Leveraging GitHub's webhook triggers, Jenkins orchestrates the provisioning of a new VM on Proxmox using Terraform, followed by configuration through Ansible. The website is served using Flask, uWSGI, and Nginx. The web app interacts with a Redis database to display and update a visitor counter in real time using Server-Sent Events.</p>
+							</article>
+							<article class="col-6 col-12-xsmall work-item project-item">
+								<a href="https://github.com/jdplab/az-resume" target="_blank" class="image fit thumb"><img src="images/thumbs/02.jpg" alt="" /></a>
+								<h3>Azure Website</h3>
+								<p>The website you are on currently. This is a "serverless" website built in Azure using Github Actions, Azure CLI and Terraform. If any changes to the web files are pushed to Github, they trigger a Github Actions workflow to deploy the updated folder to Blob Storage and purge the CDN endpoint. Any modifications to the Azure resources are provisioned using Terraform through Github Actions, including setting the necessary Cloudflare DNS records. This project also incorporates a visitor counter, which stores the data in CosmosDB and is incremented using an Azure Function written in Python.</p>
+							</article>
+						</div>
+					</section>
+					<section id="skills">
+						<h2>Skills</h2>
+						<div class="row">
+							<div class="col-4 col-12-xsmall skill-item">
+								<h3>Microsoft Azure</h3>
+								<ul class="alt">
+									<li>Storage</li>
+									<li>Compute</li>
+									<li>Entra ID</li>
+									<li>Intune</li>
+									<li>Databases</li>
+									<li>Networking</li>
+									<li>O365</li>
+									<li>Serverless Architecture</li>
+								</ul>
+							</div>
+							<div class="col-4 col-12-xsmall skill-item">
+								<h3>Amazon Web Services</h3>
+								<ul class="alt">
+									<li>Storage</li>
+									<li>Compute</li>
+									<li>IAM</li>
+									<li>Workspaces</li>
+									<li>Route53</li>
+									<li>Networking</li>
+								</ul>
+							</div>
+							<div class="col-4 col-12-xsmall skill-item">
+								<h3>Automation</h3>
+								<ul class="alt">
+									<li>Jenkins</li>
+									<li>Github Actions</li>
+									<li>Terraform</li>
+									<li>Ansible</li>
+									<li>Bash</li>
+									<li>Python</li>
+									<li>PowerShell</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-4 col-12-xsmall skill-item">
+								<h3>Windows Server</h3>
+								<ul class="alt">
+									<li>Active Directory</li>
+									<li>Group Policy</li>
+									<li>DNS</li>
+									<li>Hyper-V</li>
+									<li>Exchange 2016-2019</li>
+								</ul>
+							</div>
+							<div class="col-4 col-12-xsmall skill-item">
+								<h3>Linux Server</h3>
+								<ul class="alt">
+									<li>Ubuntu</li>
+									<li>CentOS</li>
+									<li>Red Hat</li>
+									<li>Debian</li>
+									<li>Apache</li>
+									<li>Nginx</li>
+									<li>MySQL</li>
+									<li>PostgreSQL</li>
+								</ul>
+							</div>
+							<div class="col-4 col-12-xsmall skill-item">
+								<h3>Virtualization</h3>
+								<ul class="alt">
+									<li>VMWare</li>
+									<li>Proxmox</li>
+									<li>Docker</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-6 col-12-xsmall skill-item">
+								<h3>Networking</h3>
+								<ul class="alt">
+									<li>Cisco</li>
+									<li>SonicWALL</li>
+									<li>Palo Alto</li>
+									<li>VPN</li>
+									<li>Wireless</li>
+									<li>Hybrid Cloud</li>
+								</ul>
+							</div>
+							<div class="col-6 col-12-xsmall skill-item">
+								<h3>Mobile Device Management</h3>
+								<ul class="alt">
+									<li>Airwatch</li>
+									<li>Intune</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+
+					<section id="experience">
+						<h2>Work Experience</h2>
+						<header>
+							<ul class="jobtitle">
+								<li><h3>Thrive Networks</h3></li>
+								<li>Greenwich, CT</li>
+							</ul>
+							<ul class="jobtitle">
+								<li>Systems Administrator</li>
+								<li>March 2023 - Present</li>
+							</ul>
+						</header>
+						<ul>
+							<li>Act as an escalation point for resolving issues with various software such as Microsoft Office 365 applications and add-ins, trading platforms such as Bloomberg, coding platforms such as PyCharm, and CRMs such as Salesforce.</li>
+							<li>Develop and implement automated scripts using PowerShell and Bash to streamline tasks such as user and software provisioning.</li>
+							<li>Administer Microsoft Office 365 suite, encompassing Exchange Online, SharePoint, and Teams, managing permissions, user modifications, and troubleshooting.</li>
+							<li>Oversee backup operations using Veeam and Commvault, ensuring data integrity and executing recovery tasks as required.</li>
+							<li>Manage Active Directory functions, including user creation, group policy implementation, DNS management, and replication troubleshooting.</li>
+							<li>Configure and troubleshoot Cisco routers and switches to maintain network performance, security, and reliability.</li>
+							<li>Handle configuration and troubleshooting of email filtering platforms like Proofpoint and Mimecast for enhanced email security and spam filtering.</li>
+							<li>Maintain virtualization infrastructure including Azure, AWS, and VMWare, deploying virtual machines, managing resources, and addressing issues for optimal performance.</li>
+						</ul>
+						<header>
+							<ul class="jobtitle">
+								<li><h3>Thrive Networks</h3></li>
+								<li>Greenwich, CT</li>
+							</ul>
+							<ul class="jobtitle">
+								<li>Client Support Engineer</li>
+								<li>June 2022 - March 2023</li>
+							</ul>
+						</header>
+						<ul>
+							<li>Provided technical support for various software applications including Microsoft Office 365, Bloomberg, PyCharm, and Salesforce.</li>
+							<li>Supported the administration of Microsoft Office 365 suite, aiding in user management and issue resolution.</li>
+							<li>Contributed to backup operations and data recovery tasks using Veeam and Commvault.</li>
+							<li>Assisted with Active Directory functions and server configuration tasks.</li>
+							<li>Aided in the configuration and troubleshooting of email filtering platforms for enhanced security.</li>
+							<li>Supported the maintenance of virtualization infrastructure including Azure, AWS, and VMWare.</li>
+						</ul>
+						<header>
+							<ul class="jobtitle">
+								<li><h3>Sourcepass</h3></li>
+								<li>East Northport, NY</li>
+							</ul>
+							<ul class="jobtitle">
+								<li>Client Onboarding Manager</li>
+								<li>October 2021 - June 2022</li>
+							</ul>
+						</header>
+						<ul>
+							<li>Managed a team specializing in new client onboardings, overseeing the entire process from initial documentation to implementation.</li>
+							<li>Led onsite visits to document infrastructure and baseline client environments to Sourcepass standards.</li>
+							<li>Implemented deep packet inspection on SonicWALL routers, enhancing network security and performance.</li>
+							<li>Segmented networks using VLANs and implemented Quality of Service (QoS) measures to optimize network traffic.</li>
+							<li>Facilitated email migration to Microsoft Office 365 (O365) when necessary, ensuring seamless transition and minimal disruption.</li>
+							<li>Acted as the primary point of contact for all support during onboarding, providing timely assistance and troubleshooting.</li>
+							<li>Personally performed a significant portion of the implementation work, ensuring high-quality standards and efficiency.</li>
+							<li>Provided training to team members on implementation procedures and best practices, fostering skill development and knowledge sharing.</li>
+							<li>Hosted kick-off calls with new clients to establish project timelines, goals, and expectations.</li>
+							<li>Scheduled work assignments for both myself and team members, optimizing resource allocation and project efficiency.</li>
+						</ul>
+						<header>
+							<ul class="jobtitle">
+								<li><h3>Sourcepass</h3></li>
+								<li>East Northport, NY</li>
+							</ul>
+							<ul class="jobtitle">
+								<li>Project Engineer</li>
+								<li>August 2020 - October 2021</li>
+							</ul>
+						</header>
+						<ul>
+							<li>Assisted in new client onboardings, contributing to infrastructure documentation and project planning.</li>
+							<li>Provided support for switch and router swaps, ensuring smooth transitions and minimal downtime for clients.</li>
+							<li>Participated in server migrations, facilitating seamless transfers of data and applications.</li>
+							<li>Collaborated on Microsoft Office 365 (O365) migrations, assisting with planning and execution to ensure successful transitions.</li>
+							<li>Supported Intune and Multi-Factor Authentication (MFA) rollouts, enhancing security measures for clients' systems.</li>
+							<li>Provided technical expertise and troubleshooting assistance during project implementation, ensuring client satisfaction and project success.</li>
+						</ul>
+					</section>
+
+					<section id="certs">
+						<h2>Certifications</h2>
+						<div class="row">
+							<div class="col-12 col-12-xsmall cert-item">
+								<ul class="alt">
+									<li>Microsoft Azure Administrator Associate</li>
+									<li>Microsoft Azure Fundamentals</li>
+									<li>AWS Certified Cloud Practitioner</li>
+									<li>CCNA (Cisco Certified Network Associate)</li>
+									<li>LPI Linux Essentials</li>
+									<li>ITIL v4 Foundations</li>
+									<li>CompTIA A+</li>
+									<li>CompTIA Network+</li>
+									<li>CompTIA Security+</li>
+									<li>CompTIA Cloud+</li>
+									<li>CompTIA Project+</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+                </div>
+            </div>
+
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="https://www.linkedin.com/in/jonathandpolansky/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+						<li><a href="https://github.com/jdplab" class="icon brands fa-github" target="_blank"><span class="label">Github</span></a></li>
+						<li><a href="mailto:jon@jon-polansky.com" class="icon solid fa-envelope" target="_blank"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="visitorcount">
+						<li><span>Your Visits: <b id="visits">Loading...</b></span></li>
+						<li><span>Unique Visitors: <b id="unique_visitors">Loading...</b></span></li>
+						<li><span>Total Website Visitors: <b id="total_visits">Loading...</b></span></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/menu.js"></script>
+			<script src="assets/js/scroll.js"></script>
+			<script src="assets/js/email.js"></script>
+			<script src="assets/js/visitorcount.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

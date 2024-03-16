@@ -2883,6 +2883,13 @@ ul.jobtitle {
 		text-align: center;
 	}
 
+/* Certifications */
+
+.cert-item {
+	text-align: center;
+	font-size: 1.15em;
+}
+
 /* Header */
 
 	#header {

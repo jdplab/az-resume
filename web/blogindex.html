@@ -27,11 +27,11 @@
 						</div>
 					</div>
 					<div id="links">
-						<a id="scrollToTop">Main</a>
-						<a href="blogindex.html">Blog</a>
+						<a href="index.html">Main</a>
+						<a id="scrollToTop">Blog</a>
 						<a href="resume.html">Resume</a>
-						<a href="#contact">Contact</a>
-						<a href="#" onclick="login()">Login</a>
+						<a href="index.html#contact">Contact</a>
+						<a href="#experience">Login</a>
 					</div>
 				</nav>
 			</div>
@@ -41,68 +41,32 @@
 			<header id="header">
 				<div class="inner">
 					<a href="https://linkedin.com/in/jonathandpolansky" class="image avatar" target="_blank"><img src="images/avatar.jpg" alt="" /></a>
-					<h1>I am <strong>Jonathan Polansky</strong>, <br />
-					a passionate IT professional <br />
-					and problem solver.</h1>
+					<h1>I am <strong>Jonathan Polansky</strong>. <br />
+					Welcome to my blog!</h1>
 				</div>
 			</header>
 
 		<!-- Main -->
 			<div id="main">
-
-				<!-- One -->
-					<section id="summary">
-						<header class="major">
-							<h2>Few things bring me more joy<br />
-							than tinkering with technology.</h2>
-						</header>
-						<p>This website is a testament to that. As a personal project, I transformed my resume from a traditional document into an interactive website. Initially deployed locally on a virtual machine, it evolved into a serverless architecture hosted on Azure. Please be sure to check back in often as it is constantly evolving. You can explore the original version <a href="https://resume-prod.jon-polansky.com/" target="_blank">here</a>, or you can use the navbar above to learn more about me.</p>
-					</section>
-
-					<section id="contact">
-						<h2>Get In Touch</h2>
-						<p>Impressed by my portfolio and now you want to offer me a job? Send me a message.</p>
+				<!-- Two -->
+					<section id="blogposts">
+						<h2>Posts</h2>
 						<div class="row">
-							<div class="col-8 col-12-small">
-								<form id="emailForm" method="post">
-									<div class="row gtr-uniform gtr-50">
-										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" required/></div>
-										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" required/></div>
-										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4" required></textarea></div>
-									</div>
-									<ul class="actions" style="margin-top:1em;">
-										<li><input type="submit" value="Send Message" /></li>
-									</ul>
-								</form>
-							</div>
-							<div class="col-4 col-12-small">
-								<ul class="labeled-icons">
-									<li>
-										<h3 class="icon solid fa-home"><span class="label">Address</span></h3>
-										Kings Park, NY 11754<br />
-										United States
-									</li>
-									<li>
-										<h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>
-										631-662-6400
-									</li>
-									<li>
-										<h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
-										<a href="mailto:jon@jon-polansky.com">jon@jon-polansky.com</a>
-									</li>
-								</ul>
-							</div>
+							<article class="col-6 col-12-xsmall work-item project-item">
+								<a href="https://github.com/jdplab/local-resume" target="_blank" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="" /></a>
+								<h3>Self-Hosted Resume Website</h3>
+								<p>This project focused on developing and deploying a self-hosted resume website, integrating Jenkins, Terraform, and Ansible for automation. Leveraging GitHub's webhook triggers, Jenkins orchestrates the provisioning of a new VM on Proxmox using Terraform, followed by configuration through Ansible. The website is served using Flask, uWSGI, and Nginx. The web app interacts with a Redis database to display and update a visitor counter in real time using Server-Sent Events.</p>
+							</article>
+							<article class="col-6 col-12-xsmall work-item project-item">
+								<a href="https://github.com/jdplab/az-resume" target="_blank" class="image fit thumb"><img src="images/thumbs/02.jpg" alt="" /></a>
+								<h3>Azure Website</h3>
+								<p>The website you are on currently. This is a "serverless" website built in Azure using Github Actions, Azure CLI and Terraform. If any changes to the web files are pushed to Github, they trigger a Github Actions workflow to deploy the updated folder to Blob Storage and purge the CDN endpoint. Any modifications to the Azure resources are provisioned using Terraform through Github Actions, including setting the necessary Cloudflare DNS records. This project also incorporates a visitor counter, which stores the data in CosmosDB and is incremented using an Azure Function written in Python.</p>
+							</article>
 						</div>
 					</section>
-					<div id="emailSuccessOrFail" class="modal">
-						<div class="modal-content">
-							<span class="close">&times;</span>
-							<p id="emailMessage"></p>
-						</div>
-					</div>
 
 				<!-- ELEMENTS -->
-				
+				<!--
 					<section id="four">
 						<h2>Elements</h2>
 
