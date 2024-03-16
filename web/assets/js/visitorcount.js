@@ -32,7 +32,7 @@ const getVisitCount = () => {
         }
 
         // Fetch the visit count from the server
-        fetch(`${functionApi}&repeatVisit=${repeatVisit}`)
+        fetch(`${functionApi}?repeatVisit=${repeatVisit}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
