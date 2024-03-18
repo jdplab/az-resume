@@ -18,7 +18,7 @@ function displayModal(message) {
     };
     modalContent.appendChild(closeButton);
 
-    document.body.appendChild(modal);
+    document.getElementById('main').appendChild(modal);
 
     modal.style.display = 'block';
 }
