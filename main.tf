@@ -172,11 +172,19 @@ resource "azurerm_key_vault" "resume" {
     secret_permissions        = [
       "Get",
       "List",
+      "Set",
+      "Delete",
     ]
 
     certificate_permissions   = [
       "Get",
       "List",
+      "Delete",
+      "Update",
+      "Import",
+      "Purge",
+      "Recover",
+      "Create",
     ]
   }
     access_policy {
@@ -268,7 +276,7 @@ resource "azurerm_cdn_endpoint_custom_domain" "resume" {
   host_name                = var.DOMAIN_NAME
     
     user_managed_https {
-      key_vault_secret_id = azurerm_key_vault_certificate.resume.id
+      key_vault_secret_id = azurerm_key_vault_certificate.resume.secret_id
     }
 }
 
