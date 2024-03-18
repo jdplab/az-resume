@@ -13,17 +13,19 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
         });
 
         if (response.ok) {
-            showModal('Email sent successfully!');
+            displayModal('Email sent successfully!');
             this.reset();
         } else {
-            showModal('Failed to send email.');
+            displayModal('Failed to send email.');
         }
     } catch (error) {
         console.error('Error:', error);
-        showModal('An error occurred while sending the email.');
+        displayModal('An error occurred while sending the email.');
     }
 });
 
+
+/*
 function showModal(message) {
     const modal = document.getElementById("emailSuccessOrFail");
     const modalMessage = document.getElementById("emailMessage");
@@ -43,3 +45,4 @@ function showModal(message) {
         }
     }
 }
+*/

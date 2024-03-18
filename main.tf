@@ -98,6 +98,28 @@ resource "azurerm_cdn_endpoint" "resume" {
         protocol           = "Https"
       }
     }
+
+    delivery_rule {
+      name                 = "CallbackRedirect"
+      order                = 2
+
+      url_path_condition {
+        operator           = "EndsWith"
+        match_values       = ["/.auth/login/aadb2c/callback"]
+      }
+
+      url_redirect_action {
+        redirect_type      = "Found"
+        protocol           = "Https"
+        hostname           = var.DOMAIN_NAME
+        path               = "/callback.html"
+      }
+    }
+}
+
+data "azurerm_aadb2c_directory" "resume" {
+  resource_group_name      = azurerm_resource_group.resume.name
+  domain_name              = "azresume.onmicrosoft.com"
 }
 
 data "azuread_client_config" "current" {}
@@ -149,10 +171,12 @@ resource "azurerm_key_vault" "resume" {
 
     secret_permissions        = [
       "Get",
+      "List",
     ]
 
     certificate_permissions   = [
       "Get",
+      "List",
     ]
   }
     access_policy {

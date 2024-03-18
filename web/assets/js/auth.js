@@ -48,6 +48,7 @@ function login() {
     const existingIdToken = sessionStorage.getItem('id_token');
     if (existingIdToken) {
         console.log('Valid token already exists, skipping authentication');
+        displayModal('You are already signed in.');
         return;
     }
     var nonce = generateNonce(32);
@@ -55,7 +56,7 @@ function login() {
     // Store the current page URL before redirecting
     storeCurrentPageURL();
     // Redirect user to Azure AD B2C for authentication
-    window.location.href = '<url>' + encodeURIComponent(window.location.href);
+    window.location.href = 'https://azresume.b2clogin.com/azresume.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn&client_id=8437bac7-4641-445c-83f2-20a4105108b5&nonce=' + nonce + '&redirect_uri=https%3A%2F%2Fjon-polansky.com%2F.auth%2Flogin%2Faadb2c%2Fcallback&scope=openid&response_type=id_token&prompt=login&state=' + encodeURIComponent(window.location.href);
 }
 
 // Function to handle logout
