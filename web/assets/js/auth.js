@@ -64,6 +64,7 @@ function logout() {
     clearToken();
     // Redirect user to logout endpoint or home page
     window.location.href = '/';
+    displayModal('Logoff successful.');
 }
 
 // Function to handle the authentication callback
@@ -89,7 +90,7 @@ function handleAuthenticationCallback() {
             if (tokenClaims.nonce !== storedNonce) {
                 // Nonce does not match, handle error
                 console.error('Nonce mismatch error');
-                alert('Authentication failed. Please try again.');
+                displayModal('Authentication failed. Please try again.');
                 window.location.href = '/';
                 return;
             }
@@ -103,7 +104,7 @@ function handleAuthenticationCallback() {
     if (error) {
         // Authentication failed, handle the error (e.g., display error message)
         console.error('Authentication error:', error);
-        alert('Authentication failed. Please try again.');
+        displayModal('Authentication failed. Please try again.');
         // Redirect user to the home page or another appropriate page
         window.location.href = '/';
     } else {
