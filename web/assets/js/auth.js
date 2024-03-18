@@ -62,9 +62,10 @@ function login() {
 // Function to handle logout
 function logout() {
     clearToken();
-    // Redirect user to logout endpoint or home page
-    window.location.href = '/';
     displayModal('Logoff successful.');
+    setTimeout(function() {
+        window.location.href = '/';
+    }, 3000);
 }
 
 // Function to handle the authentication callback
