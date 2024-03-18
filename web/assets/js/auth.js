@@ -62,10 +62,7 @@ function login() {
 // Function to handle logout
 function logout() {
     clearToken();
-    displayModal('Logoff successful.');
-    setTimeout(function() {
-        window.location.href = '/';
-    }, 3000);
+    window.location.href = '/logoff.html';
 }
 
 // Function to handle the authentication callback
