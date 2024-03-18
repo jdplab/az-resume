@@ -67,20 +67,16 @@ function logout() {
 
 // Function to handle the authentication callback
 function handleAuthenticationCallback() {
-    console.log('Handling authentication callback');
     // Remove the '#' character from the start of the URL fragment
     const fragment = window.location.hash.substring(1);
     // Parse fragment parameters from URL
     const urlParams = new URLSearchParams(fragment);
-    console.log('URL fragment:', fragment);
-    console.log('Parsed parameters:', Array.from(urlParams.entries()));
     const idToken = urlParams.get('id_token');
     const error = urlParams.get('error');
     const redirectFrom = urlParams.get('state');
 
     // If an ID token is present, parse its claims and store them
     if (idToken) {
-        console.log('ID token found, parsing claims and storing:', idToken);
         const tokenClaims = parseJwt(idToken);
         if (tokenClaims) {
             // Retrieve the nonce from session storage
@@ -110,7 +106,6 @@ function handleAuthenticationCallback() {
         window.location.href = '/';
     }
 
-    sessionStorage.removeItem('redirectFrom');
     displayTokenClaims();
 }
 
