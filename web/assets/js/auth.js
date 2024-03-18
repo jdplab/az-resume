@@ -156,3 +156,21 @@ window.addEventListener('load', function() {
         }
     }
 });
+
+window.onload = function() {
+    // Get the login/logout button
+    var loginButton = document.getElementById('loginButton');
+
+    // Check if the user is logged in
+    if (sessionStorage.getItem('id_token')) {
+        // If the user is logged in, change the button text to "Logout"
+        // and set the onclick function to logout()
+        loginButton.textContent = 'Logout';
+        loginButton.onclick = function() { logout(); };
+    } else {
+        // If the user is not logged in, change the button text to "Login"
+        // and set the onclick function to login()
+        loginButton.textContent = 'Login';
+        loginButton.onclick = function() { login(); };
+    }
+};
