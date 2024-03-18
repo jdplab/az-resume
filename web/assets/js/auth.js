@@ -111,6 +111,7 @@ function handleAuthenticationCallback() {
         window.location.href = '/';
     }
 
+    sessionStorage.removeItem('redirectFrom');
     displayTokenClaims();
 }
 
