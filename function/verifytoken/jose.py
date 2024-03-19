@@ -16,14 +16,11 @@ from copy import deepcopy
 from time import time
 from struct import pack
 
-from os import urandom
-get_random_bytes = urandom
-
-
-from . import HMAC, SHA256, SHA384, SHA512
-from . import PKCS1_OAEP, AES
-from . import RSA
-from . import PKCS1_v1_5 as PKCS1_v1_5_SIG
+from crypto.Hash import HMAC, SHA256, SHA384, SHA512
+from crypto.Cipher import PKCS1_OAEP, AES
+from crypto.PublicKey import RSA
+from crypto.Random import get_random_bytes
+from crypto.Signature import PKCS1_v1_5 as PKCS1_v1_5_SIG
 
 
 __all__ = ['encrypt', 'decrypt', 'sign', 'verify']
