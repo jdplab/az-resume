@@ -93,7 +93,6 @@ function handleAuthenticationCallback() {
         }
     }
 
-    // Redirect user back to the original page or perform additional actions
     window.location.href = decodeURIComponent(redirectFrom) || '/';
     if (error) {
         // Authentication failed, handle the error (e.g., display error message)
@@ -102,7 +101,7 @@ function handleAuthenticationCallback() {
         // Redirect user to the home page or another appropriate page
         window.location.href = '/';
     } else {
-        // Unexpected state, handle appropriately (e.g., redirect to home page)
+        console.log('Redirecting to the home page.')
         window.location.href = '/';
     }
 
@@ -134,24 +133,6 @@ function displayTokenClaims() {
     }
 }
 
-window.addEventListener('load', function() {
-    // Retrieve the token from session storage
-    const token = sessionStorage.getItem('id_token');
-
-    // Check if token is not null
-    if (token) {
-        // Retrieve the tokenClaims from session storage
-        const tokenClaims = JSON.parse(sessionStorage.getItem('tokenClaims'));
-        // Check if tokenClaims is not null
-        if (tokenClaims) {
-            // Update the HTML elements with the values from tokenClaims
-            console.log('TokenClaims found. Displaying token claims.');
-            document.getElementById('displayName').textContent = tokenClaims.name || 'No Data';
-            document.getElementById('emailAddresses').textContent = (tokenClaims.emails && tokenClaims.emails.join(', ')) || 'No Data';
-        }
-    }
-});
-
 window.onload = function() {
     // Get the login/logout button
     var loginButton = document.getElementById('loginButton');
@@ -162,10 +143,36 @@ window.onload = function() {
         // and set the onclick function to logout()
         loginButton.textContent = 'Logout';
         loginButton.onclick = function() { logout(); };
+
+        // Call the Azure Function to check if the user is an admin
+        fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/verifytoken', {
+            headers: {
+                'Authorization': sessionStorage.getItem('id_token')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.admin) {
+                // The user is an admin
+                // Show the admin section
+                const blogposts = document.getElementById('blogposts');
+                const adminSection = document.getElementById('adminSection');
+                if (adminSection) {
+                    adminSection.style.opacity = '1';
+                    adminSection.style.visibility = 'visible';
+                    adminSection.style.display = 'block';
+                }
+                if (blogposts) {
+                    blogposts.style.marginTop = '4em';
+                    blogposts.style.borderTop = 'solid 2px #efefef';
+                    blogposts.style.paddingTop = '4em';
+                }
+            }
+        });
     } else {
         // If the user is not logged in, change the button text to "Login"
         // and set the onclick function to login()
         loginButton.textContent = 'Login';
         loginButton.onclick = function() { login(); };
     }
-};
+}

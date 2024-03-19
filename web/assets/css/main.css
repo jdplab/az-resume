@@ -245,6 +245,22 @@ input, select, textarea {
 		resize: vertical;
 	}
 
+/* Admin Section */
+
+div#adminSection {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+}
+
+/* Blog Posts */
+
+div#main section#blogposts {
+	border-top: none;
+	margin-top: 0;
+	padding-top: 0;
+}
+
 /* Modal */
 
 .modal {
