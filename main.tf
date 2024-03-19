@@ -381,6 +381,7 @@ resource "azurerm_linux_function_app" "resume" {
     "resumedb1_DOCUMENTDB" = azurerm_cosmosdb_account.resume.connection_strings[0]
     "SENDGRID_API_KEY"     = var.SENDGRID_API_KEY
     "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.functions.name}${data.azurerm_storage_account_blob_container_sas.functions.sas}"
+    PYTHON_ENABLE_WORKER_EXTENSIONS = "1"
   }
 
   site_config {
