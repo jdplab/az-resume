@@ -1,7 +1,7 @@
 import logging
 import http.client
 from azure.functions import HttpRequest, HttpResponse
-from ..libs import jose
+from libs import jose
 import json
 
 jwt = jose.jwt
