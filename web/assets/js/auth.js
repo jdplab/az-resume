@@ -133,7 +133,7 @@ function displayTokenClaims() {
     }
 }
 
-window.onload = function() {
+window.addEventListener('load', function() {
     // Get the login/logout button
     var loginButton = document.getElementById('loginButton');
 
@@ -175,4 +175,4 @@ window.onload = function() {
         loginButton.textContent = 'Login';
         loginButton.onclick = function() { login(); };
     }
-}
+})
