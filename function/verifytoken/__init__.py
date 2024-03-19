@@ -1,8 +1,11 @@
 import logging
 import http.client
 from azure.functions import HttpRequest, HttpResponse
-from jose import jwt, JWTError
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.backends import default_backend
+import jwt
 import json
+import base64
 
 def main(req: HttpRequest) -> HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -30,11 +33,16 @@ def main(req: HttpRequest) -> HttpResponse:
                         'e': key['e']
                     }
 
-            token_claims = jwt.decode(id_token, rsa_key, algorithms=['RS256'])
+            public_key = rsa.RSAPublicNumbers(
+                e=int.from_bytes(base64.urlsafe_b64decode(rsa_key['e'] + '=='), byteorder='big'),
+                n=int.from_bytes(base64.urlsafe_b64decode(rsa_key['n'] + '=='), byteorder='big')
+            ).public_key(default_backend())
+
+            token_claims = jwt.decode(id_token, public_key, algorithms=['RS256'])
 
             if token_claims.get('extension_CanEdit') == "1":
                 return HttpResponse(json.dumps({"admin": True}), status_code=200, mimetype="application/json")
-        except JWTError:
+        except jwt.JWTError:
             pass
 
     return HttpResponse(json.dumps({"admin": False}), status_code=200, mimetype="application/json")
