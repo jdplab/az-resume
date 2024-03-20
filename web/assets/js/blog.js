@@ -29,7 +29,7 @@ function blogCreate() {
                     newBlog.style.visibility = 'visible';
                     newBlog.style.display = 'block';
                     newBlog.innerHTML = blobContent;
-                    const quill = new Quill('#editor', {
+                    quill = new Quill('#editor', {
                         theme: 'snow'
                     });
                 }
