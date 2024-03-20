@@ -253,6 +253,14 @@ div#adminSection {
 	opacity: 0;
 }
 
+/* New Blog */
+
+div#main section#newBlog {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+}
+
 /* Blog Posts */
 
 div#main section#blogposts {
