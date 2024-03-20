@@ -93,43 +93,13 @@ function handleAuthenticationCallback() {
         }
     }
 
-    window.location.href = decodeURIComponent(redirectFrom) || '/';
+    window.location.replace(decodeURIComponent(redirectFrom) || '/');
     if (error) {
         // Authentication failed, handle the error (e.g., display error message)
         console.error('Authentication error:', error);
         displayModal('Authentication failed. Please try again.');
         // Redirect user to the home page or another appropriate page
         window.location.href = '/';
-    } else {
-        console.log('Redirecting to the home page.')
-        window.location.href = '/';
-    }
-
-    displayTokenClaims();
-}
-
-function displayTokenClaims() {
-    console.log('Displaying token claims');
-    // Get ID token from sessionStorage
-    const idToken = sessionStorage.getItem('id_token');
-    if (idToken) {
-        // Parse ID token to get claims
-        const tokenClaims = parseJwt(idToken);
-        if (tokenClaims) {
-            // Display claims dynamically
-            const displayNameElement = document.getElementById('displayName');
-            if (displayNameElement) {
-                displayNameElement.innerText = tokenClaims.name || 'No Data';
-            }
-            const emailAddressesElement = document.getElementById('emailAddresses');
-            if (emailAddressesElement) {
-                emailAddressesElement.innerText = (tokenClaims.emails && tokenClaims.emails.join(', ')) || 'No Data';
-            }
-        } else {
-            console.error('Token claims not found.');
-        }
-    } else {
-        console.error('ID token not found.');
     }
 }
 
