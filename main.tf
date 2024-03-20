@@ -63,6 +63,16 @@ resource "azurerm_storage_account" "resume" {
   static_website {
     index_document         = "index.html"
   }
+
+  blob_properties {
+    cors_rule {
+      allowed_headers      = ["*"]
+      allowed_methods      = ["GET"]
+      allowed_origins      = ["https://jon-polansky.com"]
+      exposed_headers      = ["*"]
+      max_age_in_seconds   = 3600
+    }
+  }
 }
 
 resource "azurerm_storage_container" "admin" {

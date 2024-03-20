@@ -8,16 +8,17 @@ function blogCreate() {
                         'Authorization': sessionStorage.getItem('id_token')
                     }
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.admin) {
-                        displayModal('Create a blog.');
-                    } else {
-                        displayModal('Access Denied.');
-                    }
-                });
-            } else {
-                displayModal('You must be logged in as an admin to create a blog post.');
+                .then(response => response.text())
+                .then(blobUrlWithSas => {
+                    // Fetch the blob content
+                    fetch(blobUrlWithSas)
+                    .then(response => response.text())
+                    .then(blobContent => {
+                        // Insert the blob content into a container on your page
+                        document.getElementById('newBlog').innerHTML = blobContent;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
             }
         };
     }
