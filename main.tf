@@ -68,13 +68,13 @@ resource "azurerm_storage_account" "resume" {
 resource "azurerm_storage_container" "admin" {
   name                     = "admin"
   storage_account_name     = azurerm_storage_account.resume.name
-  container_access_type    = "Private"
+  container_access_type    = "private"
 }
 
 resource "azurerm_storage_container" "blogposts" {
   name                     = "blogposts"
   storage_account_name     = azurerm_storage_account.resume.name
-  container_access_type    = "Private"
+  container_access_type    = "private"
 }
 
 resource "azurerm_cdn_profile" "resume" {
