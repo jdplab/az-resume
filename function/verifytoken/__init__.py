@@ -1,11 +1,8 @@
 import logging
 import http.client
 from azure.functions import HttpRequest, HttpResponse
-from . import jose
+from jose import jwt, JWTError
 import json
-
-jwt = jose.jwt
-JWTError = jose.JWTError
 
 def main(req: HttpRequest) -> HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
