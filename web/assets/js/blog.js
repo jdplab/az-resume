@@ -5,7 +5,7 @@ function blogCreate() {
             if (sessionStorage.getItem('id_token')) {
                 fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/newblog', {
                     headers: {
-                        'Authorization': sessionStorage.getItem('id_token')
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
                     }
                 })
                 .then(response => {
