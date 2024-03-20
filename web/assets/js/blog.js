@@ -65,7 +65,7 @@ function savePost() {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
+        return response.text();
     })
     .then(data => {
         alert('Post saved successfully.');
