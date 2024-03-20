@@ -38,7 +38,8 @@ def main(req: HttpRequest) -> HttpResponse:
 
             logging.info('RSA key: %s', rsa_key)
 
-            token_claims = jwt.decode(id_token, rsa_key, algorithms=['RS256'])
+            expected_audience = '8437bac7-4641-445c-83f2-20a4105108b5'
+            token_claims = jwt.decode(id_token, rsa_key, algorithms=['RS256'], audience=expected_audience)
 
             logging.info('Token claims: %s', token_claims)
 
