@@ -1,7 +1,7 @@
 import os
 import json
 from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 import azure.functions as func
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -22,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 image_blob_client.blob_name,
                 account_key=blob_service_client.credential.account_key,
                 permission=BlobSasPermissions(read=True),
-                expiry=datetime.now(datetime.UTC) + timedelta(minutes=20)
+                expiry=datetime.now(timezone.utc) + timedelta(minutes=20)
             )
 
             image_url = image_blob_client.url + "?" + sas_token
