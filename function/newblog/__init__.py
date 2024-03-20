@@ -13,7 +13,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             token = auth_header.split(' ')[1]
             # Verify the JWT
             payload = verify_token(token)
-            if 'admin' in payload and payload['admin']:
+            if payload.get('extension_CanEdit') == "1":
                 # Generate a SAS for the blob
                 blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
                 blob_client = blob_service_client.get_blob_client('admin', 'newblog.html')

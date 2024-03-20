@@ -12,7 +12,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             token = auth_header.split(' ')[1]
             # Verify the JWT
             payload = verify_token(token)
-            if 'admin' in payload and payload['admin']:
+            if payload.get('extension_CanEdit') == "1":
                 # Get the title, description, and HTML from the request body
                 req_body = req.get_json()
                 title = req_body.get('title')
