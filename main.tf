@@ -349,24 +349,6 @@ data "azurerm_storage_account_blob_container_sas" "functions" {
   }
 }
 
-variable "GIT_COMMIT_ID" {
-  type = string
-}
-
-data "archive_file" "resume" {
-  type        = "zip"
-  source_dir  = "${path.module}/function"
-  output_path = "${path.module}/function-app-${var.GIT_COMMIT_ID}.zip"
-}
-
-resource "azurerm_storage_blob" "functions" {
-  name                     = "function-app-${var.GIT_COMMIT_ID}.zip"
-  storage_account_name     = azurerm_storage_account.resume.name
-  storage_container_name   = azurerm_storage_container.functions.name
-  type                     = "Block"
-  source                   = data.archive_file.resume.output_path
-}
-
 resource "azurerm_linux_function_app" "resume" {
   name                     = "jpolanskyresume-functionapp"
   location                 = azurerm_resource_group.resume.location
@@ -380,7 +362,6 @@ resource "azurerm_linux_function_app" "resume" {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "resumedb1_DOCUMENTDB" = azurerm_cosmosdb_account.resume.connection_strings[0]
     "SENDGRID_API_KEY"     = var.SENDGRID_API_KEY
-    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.resume.name}.blob.core.windows.net/${azurerm_storage_container.functions.name}/${azurerm_storage_blob.functions.name}${data.azurerm_storage_account_blob_container_sas.functions.sas}"
   }
 
   site_config {
