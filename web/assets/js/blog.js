@@ -3,7 +3,7 @@ function blogCreate() {
     if (createPostButton) {
         createPostButton.onclick = function() {
             if (sessionStorage.getItem('id_token')) {
-                fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/verifytoken', {
+                fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/newblog', {
                     headers: {
                         'Authorization': sessionStorage.getItem('id_token')
                     }

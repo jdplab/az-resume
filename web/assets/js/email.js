@@ -23,26 +23,3 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
         displayModal('An error occurred while sending the email.');
     }
 });
-
-
-/*
-function showModal(message) {
-    const modal = document.getElementById("emailSuccessOrFail");
-    const modalMessage = document.getElementById("emailMessage");
-    modal.style.display = "block";
-    modalMessage.textContent = message;
-
-    // Close the modal when user clicks on the close button
-    const closeBtn = document.getElementsByClassName("close")[0];
-    closeBtn.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // Close the modal when user clicks anywhere outside of it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-}
-*/

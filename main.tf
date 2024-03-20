@@ -65,6 +65,18 @@ resource "azurerm_storage_account" "resume" {
   }
 }
 
+resource "azurerm_storage_container" "admin" {
+  name                     = "admin"
+  storage_account_name     = azurerm_storage_account.resume.name
+  container_access_type    = "Private"
+}
+
+resource "azurerm_storage_container" "blogposts" {
+  name                     = "blogposts"
+  storage_account_name     = azurerm_storage_account.resume.name
+  container_access_type    = "Private"
+}
+
 resource "azurerm_cdn_profile" "resume" {
   name                     = "resume-cdn-profile"
   resource_group_name      = azurerm_resource_group.resume.name
@@ -327,28 +339,6 @@ resource "azurerm_service_plan" "resume" {
   sku_name                 = "Y1"
 }
 
-resource "azurerm_storage_container" "functions" {
-  name                     = "functions"
-  storage_account_name     = azurerm_storage_account.resume.name
-  container_access_type    = "private"
-}
-
-data "azurerm_storage_account_blob_container_sas" "functions" {
-  connection_string        = azurerm_storage_account.resume.primary_connection_string
-  container_name           = azurerm_storage_container.functions.name
-  start                    = "2024-03-01T00:00:00Z"
-  expiry                   = "2027-03-01T00:00:00Z"
-
-  permissions {
-    read                   = true
-    write                  = false
-    add                    = false
-    create                 = false
-    delete                 = false
-    list                   = false
-  }
-}
-
 resource "azurerm_linux_function_app" "resume" {
   name                     = "jpolanskyresume-functionapp"
   location                 = azurerm_resource_group.resume.location
@@ -362,6 +352,8 @@ resource "azurerm_linux_function_app" "resume" {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
     "resumedb1_DOCUMENTDB" = azurerm_cosmosdb_account.resume.connection_strings[0]
     "SENDGRID_API_KEY"     = var.SENDGRID_API_KEY
+    "STORAGE_CONNECTIONSTRING" = azurerm_storage_account.resume.primary_connection_string
+    "BLOGPOSTS_CONTAINER"  = azurerm_storage_container.blogposts.name
   }
 
   site_config {
