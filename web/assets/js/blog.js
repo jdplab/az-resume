@@ -1,41 +1,43 @@
 function blogCreate() {
-
-if (sessionStorage.getItem('id_token')) {
-    fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/newblog', {
-        headers: {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(blobUrlWithSas => {
-        // Fetch the blob content
-        fetch(blobUrlWithSas)
+    if (sessionStorage.getItem('id_token')) {
+        fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/newblog', {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
+            }
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.text();
         })
-        .then(blobContent => {
-            const newBlog = document.getElementById('newBlog');
-            if (newBlog) {
-                newBlog.style.opacity = '1';
-                newBlog.style.visibility = 'visible';
-                newBlog.style.display = 'block';
-                newBlog.innerHTML = blobContent;
-            }
+        .then(blobUrlWithSas => {
+            // Fetch the blob content
+            fetch(blobUrlWithSas)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(blobContent => {
+                const newBlog = document.getElementById('newBlog');
+                if (newBlog) {
+                    newBlog.style.opacity = '1';
+                    newBlog.style.visibility = 'visible';
+                    newBlog.style.display = 'block';
+                    newBlog.innerHTML = blobContent;
+                    const quill = new Quill('#editor', {
+                        theme: 'snow'
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching blob:', error));
         })
-        .catch(error => console.error('Error fetching blob:', error));
-    })
-    .catch(error => console.error('Error fetching blob URL:', error));
-} else {
-    displayModal('You must be logged in to create a blog post.')
-}
+        .catch(error => console.error('Error fetching blob URL:', error));
+    } else {
+        displayModal('You must be logged in to create a blog post.')
+    }
 };
 
 function savePost() {
