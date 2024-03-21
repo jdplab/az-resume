@@ -58,7 +58,7 @@ function savePost() {
     const description = document.getElementById('description').value;
     const image = document.getElementById('image').files[0];
     const tags = document.getElementById('tags').value;
-    const html = quill.root.innerHTML;
+    const html = tinymce.get('editor').getContent();
     let formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
