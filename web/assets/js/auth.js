@@ -146,3 +146,11 @@ window.addEventListener('load', function() {
         loginButton.onclick = function() { login(); };
     }
 })
+
+setInterval(refreshToken, 3300000);
+function refreshToken() {
+    console.log('Refreshing token');
+    var nonce = generateNonce(32);
+    sessionStorage.setItem('nonce', nonce);
+    window.location.href = 'https://azresume.b2clogin.com/azresume.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn&client_id=8437bac7-4641-445c-83f2-20a4105108b5&nonce=' + nonce + '&redirect_uri=https%3A%2F%2Fjon-polansky.com%2F.auth%2Flogin%2Faadb2c%2Fcallback&scope=openid&response_type=id_token&prompt=none&state=' + encodeURIComponent(window.location.href);
+}

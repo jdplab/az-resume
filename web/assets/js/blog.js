@@ -1,5 +1,3 @@
-let quill;
-
 function blogCreate() {
     if (sessionStorage.getItem('id_token')) {
         fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/newblog', {
@@ -35,11 +33,13 @@ function blogCreate() {
                     });
                     tinymce.init({
                         selector: '#editor',
+                        placeholder: 'Type here...',
                         height: 500,
+                        resize: true,
                         plugins: [
                             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                            'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                            'insertdatetime', 'media', 'table', 'help', 'wordcount', 'autoresize'
                         ],
                         toolbar: 'undo redo | blocks | ' +
                         'bold italic backcolor | alignleft aligncenter ' +
