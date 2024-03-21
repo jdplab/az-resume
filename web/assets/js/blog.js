@@ -36,17 +36,12 @@ function blogCreate() {
                         placeholder: 'Type here...',
                         min_height: 500,
                         resize: true,
-                        inline: true,
-                        plugins: [
-                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                            'insertdatetime', 'media', 'table', 'help', 'wordcount', 'autoresize'
-                        ],
-                        toolbar: 'undo redo | blocks | ' +
-                        'bold italic backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat | help',
+                        menubar: 'file edit view insert format tools table help',
+                        plugins: 'preview searchreplace autolink directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+                        toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image media | table codesample | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | ltr rtl",
                         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+                        image_advtab: true,
+                        toolbar_mode: 'wrap',
                     })
                 }
             })
