@@ -30,7 +30,7 @@ function blogCreate() {
                     newBlog.style.display = 'block';
                     newBlog.innerHTML = blobContent;
                     tinymce.init({
-                        selector: 'newBlog',
+                        selector: '#editor',
                         inline: true,
                         plugins: 'autolink charmap code codesample directionality fullscreen help image importcss insertdatetime link lists media nonbreaking preview quickbars searchreplace table visualblocks visualchars',
                     })
