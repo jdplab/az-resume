@@ -29,6 +29,10 @@ function blogCreate() {
                     newBlog.style.visibility = 'visible';
                     newBlog.style.display = 'block';
                     newBlog.innerHTML = blobContent;
+                    document.getElementById('image').addEventListener('change', function() {
+                        var filename = this.files[0].name;
+                        document.getElementById('filename').textContent = filename;
+                    });
                     tinymce.init({
                         selector: '#editor',
                         height: 500,
@@ -52,11 +56,6 @@ function blogCreate() {
         displayModal('You must be logged in to create a blog post.')
     }
 };
-
-document.getElementById('image').addEventListener('change', function() {
-    var filename = this.files[0].name;
-    document.getElementById('filename').textContent = filename;
-});
 
 function savePost() {
     const title = document.getElementById('title').value;
