@@ -34,8 +34,9 @@ function blogCreate() {
                     tinymce.init({
                         selector: '#editor',
                         placeholder: 'Type here...',
-                        height: 500,
+                        min_height: 500,
                         resize: true,
+                        inline: true,
                         plugins: [
                             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
