@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<script src="https://cdn.tiny.cloud/1/q7648hvurw1lf6ch14apkg45x4hgmmklcvkiytmydm58iqyp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
 <body>
 	
 	<input type="text" id="title" placeholder="Title" style="margin: 1em;">
 	<input type="text" id="description" placeholder="Short Description" style="margin: 1em;">
 	<input type="file" id="image" class="button icon solid fa-download" style="display: none;">
 	<label for="image" class="button icon solid fa-download" style="margin: 1em;">Upload Image</label>
-	<input type="text" id="tags" placeholder="tags" style="margin: 1em;">
-	<label for="tags" style="margin: 1em;">separate by comma</label>
+	<input type="text" id="tags" placeholder="tags,comma,separated" style="margin: 1em;">
 
-	<div id="editor">
+	<div id="editor" class="editor">
+		<p>New blog content</p>
 	</div>
 
 	<button id="saveBlogPost" class="button" onclick="savePost()">Save Post</button>

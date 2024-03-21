@@ -261,7 +261,7 @@ div#main section#newBlog {
 	opacity: 0;
 }
 
-div#main section#newBlog div#editor * {
+div#editor.editor * {
 	margin: 0;
 }
 
