@@ -6,11 +6,11 @@
 </head>
 <body>
 	
-	<input type="text" id="title" placeholder="Title" style="margin: 1em;">
-	<input type="text" id="description" placeholder="Short Description" style="margin: 1em;">
-	<input type="file" id="image" class="button icon solid fa-download" style="display: none;">
-	<label for="image" class="button icon solid fa-download" style="margin: 1em;">Upload Image</label>
-	<input type="text" id="tags" placeholder="tags,comma,separated" style="margin: 1em;">
+	<input type="text" id="title" placeholder="Title" style="margin: 1em;" required>
+	<input type="text" id="description" placeholder="Short Description" style="margin: 1em;" required>
+	<input type="file" id="image" class="button icon solid fa-download" style="display: none;" required>
+	<label for="image" class="button icon solid fa-download" style="margin: 1em;"><span id="filename"></span></label>
+	<input type="text" id="tags" placeholder="tags,comma,separated" style="margin: 1em;" required>
 
 	<div id="editor" class="editor">
 		<p>New blog content</p>

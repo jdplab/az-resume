@@ -53,6 +53,11 @@ function blogCreate() {
     }
 };
 
+document.getElementById('image').addEventListener('change', function() {
+    var filename = this.files[0].name;
+    document.getElementById('filename').textContent = filename;
+});
+
 function savePost() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
