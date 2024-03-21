@@ -255,7 +255,7 @@ div#adminSection {
 
 /* New Blog */
 
-div#main section#newBlog {
+div#main div#newBlog {
 	display: none;
 	visibility: hidden;
 	opacity: 0;

@@ -14,7 +14,7 @@
 		<meta name="description" content="Jonathan Polansky's resume. https://github.com/jdplab/az-resume"/>
 		<link rel="icon" href="images/terminal.ico">
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<script src="https://cdn.tiny.cloud/1/q7648hvurw1lf6ch14apkg45x4hgmmklcvkiytmydm58iqyp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+		<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.3/dist/quill.snow.css" rel="stylesheet" />
 	</head>
 	<body class="is-preload">
 
@@ -54,8 +54,8 @@
 					<button id="blogCreate" class="button primary" onclick="blogCreate()">Create Post</button>
 				</div>
 
-				<div id="newBlog">
-				</div>
+				<section id="newBlog">
+				</section>
 				<!-- Two -->
 					<section id="blogposts">
 						<div class="row" id="blogShortDescriptions">
@@ -93,20 +93,9 @@
 			<script src="assets/js/modal.js"></script>
 			<script src="assets/js/visitorcount.js"></script>
 			<script src="assets/js/auth.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.3/dist/quill.js"></script>
 			<script src="assets/js/blog.js"></script>
 			<script src="assets/js/main.js"></script>
-
-			<script>
-				tinymce.init({
-				  selector: 'newBlog',
-				  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-				  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-				  mergetags_list: [
-					{ value: 'First.Name', title: 'First Name' },
-					{ value: 'Email', title: 'Email' },
-				  ],
-				});
-			  </script>
 
 	</body>
 </html>

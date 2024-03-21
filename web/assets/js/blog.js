@@ -29,9 +29,11 @@ function blogCreate() {
                     newBlog.style.visibility = 'visible';
                     newBlog.style.display = 'block';
                     newBlog.innerHTML = blobContent;
-                    quill = new Quill('#editor', {
-                        theme: 'snow'
-                    });
+                    tinymce.init({
+                        selector: 'newBlog',
+                        inline: true,
+                        plugins: 'autolink charmap code codesample directionality fullscreen help image importcss insertdatetime link lists media nonbreaking preview quickbars searchreplace table visualblocks visualchars',
+                    })
                 }
             })
             .catch(error => console.error('Error fetching blob:', error));
