@@ -18,7 +18,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 description = req.form.get('description')
                 html = req.form.get('html')
                 image = req.files.get('image')
-                tags = req.form.get('tags')
+                tags = [tag.strip() for tag in req.form.get('tags').split(',')]
                 # Get the last post number from a blob
                 blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
                 last_post_blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), 'last_post_number.txt')

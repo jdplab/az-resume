@@ -9,12 +9,8 @@ xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
         var response = JSON.parse(xhr.responseText);
         var data = response.data;
-        var imageUrl = response.image_url;
 
         document.getElementById('fullBlogPost').innerHTML = `
-            <h3>${data.title}</h3>
-            <img src="${imageUrl}" alt="${data.title}" />
-            <p>${data.description}</p>
             <div>${data.html}</div>
         `;
     }

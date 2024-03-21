@@ -98,11 +98,18 @@ xhr.onreadystatechange = function () {
         var html = '';
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i];
+
+            var tagsHtml = '';
+            for (var j = 0; j < post.data.tags.length; j++) {
+                tagsHtml += '<span class="blogposttag">' + post.data.tags[j] + '</span>';
+            }
+
             html += `
                 <article class="col-6 col-12-xsmall work-item project-item">
                     <a href="/blog.html?id=${post.id}" class="image fit"><img src="${post.image_url}" alt="${post.data.title}" /></a>
                     <h3>${post.data.title}</h3>
                     <p>${post.data.description}</p>
+                    <div class="tags">${tagsHtml}</div>
                 </article>
             `;
         }

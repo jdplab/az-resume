@@ -19,7 +19,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 image_blob_client.blob_name,
                 account_key=blob_service_client.credential.account_key,
                 permission=BlobSasPermissions(read=True),
-                expiry=datetime.now(timezone.utc) + timedelta(minutes=20)
+                expiry=datetime.now(timezone.utc) + timedelta(minutes=30)
             )
 
             image_url = image_blob_client.url + "?" + sas_token
