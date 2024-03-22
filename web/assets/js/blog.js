@@ -97,20 +97,20 @@ xhr.onreadystatechange = function () {
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i];
 
-            var date = new Date(post.data.timestamp);
+            var date = new Date(post.timestamp);
             var formattedDate = date.toDateString();
 
             var tagsHtml = '';
-            for (var j = 0; j < post.data.tags.length; j++) {
-                tagsHtml += (j > 0 ? ' ' : '') + '<li class="button blogposttag">' + post.data.tags[j] + '</li>';
+            for (var j = 0; j < post.tags.length; j++) {
+                tagsHtml += (j > 0 ? ' ' : '') + '<li class="button blogposttag">' + post.tags[j] + '</li>';
             }
 
             html += `
                 <a href="/blog.html?id=${post.id}"><article class="col-6 col-12-xsmall work-item project-item article-preview"></a>
-                    <img src="${post.image_url}" alt="${post.data.title}" class="image fit">
-                    <h3>${post.data.title}</h3>
+                    <img src="${post.image_url}" alt="${post.title}" class="image fit">
+                    <h3>${post.title}</h3>
                     <p>${formattedDate}</p>
-                    <p>${post.data.description}</p>
+                    <p>${post.description}</p>
                     <ul class="tags">
                         ${tagsHtml}
                     </ul>
