@@ -1,14 +1,15 @@
+import azure.functions as func
+from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
+from azure.cosmos import CosmosClient
+from datetime import datetime, timezone, timedelta
 import os
 import json
-from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
-from datetime import datetime, timezone, timedelta
-import azure.functions as func
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         post_id = req.params.get('id')
         if post_id:
-            cosmos_client = CosmosClient(os.getenv('resumedb1_DOCUMENTDB'), credential=None)
+            cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
             database = cosmos_client.get_database_client('resumedb')
             container = database.get_container_client('blogposts')
             post = container.read_item(item=post_id, partition_key=post_id)

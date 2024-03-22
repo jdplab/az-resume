@@ -4,7 +4,7 @@ from azure.cosmos import CosmosClient
 import json
 import os
 from datetime import datetime
-from verifytoken import verify_token  # Import the verify_token function
+from verifytoken import verify_token
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
@@ -21,7 +21,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 image = req.files.get('image')
                 tags = [tag.strip() for tag in req.form.get('tags').split(',')]
                 # Get the last post number from Cosmos DB
-                cosmos_client = CosmosClient(os.getenv('resumedb1_DOCUMENTDB'), credential=None)
+                cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
                 database = cosmos_client.get_database_client('resumedb')
                 container = database.get_container_client('blogposts')
                 last_post_number = container.read_item(item='last_post_number', partition_key='last_post_number')['value']
