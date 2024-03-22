@@ -273,6 +273,18 @@ div#main section#blogposts {
 	padding-top: 0;
 }
 
+/* Article-Preview */
+article.col-6.col-12-xsmall.work-item.project-item.article-preview:hover {
+	background-color: #e2e1e1;
+	cursor: pointer;
+}
+
+/* Tags */
+
+ul.tags {
+	display: flex;
+}
+
 /* Modal */
 
 .modal {
@@ -2832,6 +2844,25 @@ ul.jobtitle {
 		.button.fit {
 			min-width: 0;
 			width: 100%;
+		}
+
+		input[type="submit"].small,
+		input[type="reset"].small,
+		input[type="button"].small,
+		.button.blogposttag {
+			font-size: 0.8em;
+			min-width: 2em;
+			height: 2em;
+			line-height: 1.5em;
+			padding: 0 .5em;
+		}
+
+		input[type="submit"].small,
+		input[type="reset"].small,
+		input[type="button"].small,
+		.button.blogposttag:hover {
+			color: #787878 !important;
+			border-color: #efefef;
 		}
 
 		input[type="submit"].small,

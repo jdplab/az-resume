@@ -38,7 +38,7 @@ function blogCreate() {
                         resize: true,
                         menubar: 'file edit view insert format tools table help',
                         plugins: 'preview searchreplace autolink directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
-                        toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image media | table codesample | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | ltr rtl",
+                        toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image media | table codesample | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview",
                         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
                         image_advtab: true,
                         toolbar_mode: 'wrap',
@@ -92,24 +92,29 @@ var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getrecentposts', true);
 xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
-        // Parse the response
         var posts = JSON.parse(xhr.responseText);
 
         var html = '';
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i];
 
+            var date = new Date(post.data.timestamp);
+            var formattedDate = date.toDateString();
+
             var tagsHtml = '';
             for (var j = 0; j < post.data.tags.length; j++) {
-                tagsHtml += '<span class="blogposttag">' + post.data.tags[j] + '</span>';
+                tagsHtml += (j > 0 ? ' ' : '') + '<li class="button blogposttag">' + post.data.tags[j] + '</li>';
             }
 
             html += `
-                <article class="col-6 col-12-xsmall work-item project-item">
-                    <a href="/blog.html?id=${post.id}" class="image fit"><img src="${post.image_url}" alt="${post.data.title}" /></a>
+                <article class="col-6 col-12-xsmall work-item project-item article-preview" href="/blog.html?id=${post.id}">
+                    <a class="image fit"><img src="${post.image_url}" alt="${post.data.title}" /></a>
                     <h3>${post.data.title}</h3>
+                    <p>${formattedDate}</p>
                     <p>${post.data.description}</p>
-                    <div class="tags">${tagsHtml}</div>
+                    <ul class="tags">
+                        ${tagsHtml}
+                    </ul>
                 </article>
             `;
         }
