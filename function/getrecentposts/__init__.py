@@ -7,7 +7,7 @@ import json
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
-        cosmos_client = CosmosClient(os.getenv('resumedb1_DOCUMENTDB'), credential=None)
+        cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
         database = cosmos_client.get_database_client('resumedb')
         container = database.get_container_client('blogposts')
 

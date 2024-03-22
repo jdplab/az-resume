@@ -39,7 +39,7 @@ function blogCreate() {
                         menubar: 'file edit view insert format tools table help',
                         plugins: 'preview searchreplace autolink directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
                         toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image media | table codesample | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview",
-                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px } img {max-width: 100%; height: auto;}',
                         image_advtab: true,
                         toolbar_mode: 'wrap',
                     })
