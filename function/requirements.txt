@@ -1,3 +1,4 @@
 python-jose[cryptography]
 requests
 azure-storage-blob
+azure-cosmos

@@ -1,21 +1,29 @@
+import azure.functions as func
+from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
+from azure.cosmos import CosmosClient
+from datetime import datetime, timezone, timedelta
 import os
 import json
-from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
-from datetime import datetime, timezone, timedelta
-import azure.functions as func
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
-        blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
-        last_post_blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), 'last_post_number.txt')
-        last_post_number = int(last_post_blob_client.download_blob().readall())
-        posts = []
-        for i in range(last_post_number, max(0, last_post_number - 10), -1):
-            post_id = str(i).zfill(4)
-            blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), post_id + '.json')
-            json_data = json.loads(blob_client.download_blob().readall())
-            image_blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), post_id + '.jpg')
+        cosmos_client = CosmosClient(os.getenv('resumedb1_DOCUMENTDB'), credential=None)
+        database = cosmos_client.get_database_client('resumedb')
+        container = database.get_container_client('blogposts')
 
+        blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
+
+        # Query the last 10 posts from Cosmos DB
+        query = "SELECT * FROM c ORDER BY c.timestamp DESC OFFSET 0 LIMIT 10"
+        posts = list(container.query_items(
+            query=query,
+            enable_cross_partition_query=True
+        ))
+
+        for post in posts:
+            post_id = post['id']
+            # Generate a SAS token for the image
+            image_blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), post_id + '.jpg')
             sas_token = generate_blob_sas(
                 blob_service_client.account_name,
                 os.getenv('BLOGPOSTS_CONTAINER'),
@@ -24,10 +32,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 permission=BlobSasPermissions(read=True),
                 expiry=datetime.now(timezone.utc) + timedelta(minutes=20)
             )
-
             image_url = image_blob_client.url + "?" + sas_token
+            # Add the image URL to the post data
+            post['image_url'] = image_url
 
-            posts.append({'id': post_id, 'data': json_data, 'image_url': image_url})
         return func.HttpResponse(json.dumps(posts), status_code=200)
     except Exception as e:
         return func.HttpResponse(str(e), status_code=400)

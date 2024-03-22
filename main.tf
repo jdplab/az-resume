@@ -326,7 +326,16 @@ resource "azurerm_cosmosdb_sql_database" "resume" {
 }
 
 resource "azurerm_cosmosdb_sql_container" "resume" {
-  name                     = "resumecontainer"
+  name                     = "visitorcount"
+  resource_group_name      = azurerm_resource_group.resume.name
+  account_name             = azurerm_cosmosdb_account.resume.name
+  database_name            = azurerm_cosmosdb_sql_database.resume.name
+  partition_key_path       = "/id"
+  throughput               = 400
+}
+
+resource "azurerm_cosmosdb_sql_container" "blogposts" {
+  name                     = "blogposts"
   resource_group_name      = azurerm_resource_group.resume.name
   account_name             = azurerm_cosmosdb_account.resume.name
   database_name            = azurerm_cosmosdb_sql_database.resume.name

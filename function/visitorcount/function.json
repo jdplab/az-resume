@@ -23,7 +23,7 @@
         "type": "cosmosDB",
         "connection": "resumedb1_DOCUMENTDB",
         "databaseName": "resumedb",
-        "containerName": "resumecontainer"
+        "containerName": "visitorcount"
         },
         {
         "name": "outputDocument",
@@ -31,7 +31,7 @@
         "type": "cosmosDB",
         "connection": "resumedb1_DOCUMENTDB",
         "databaseName": "resumedb",
-        "containerName": "resumecontainer"
+        "containerName": "visitorcount"
         }
     ]
 }
