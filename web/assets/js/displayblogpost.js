@@ -11,7 +11,7 @@ xhr.onreadystatechange = function () {
         var data = response.data;
 
         document.getElementById('fullBlogPost').innerHTML = `
-            <div>${data.html}</div>
+            <div class="fullpost">${data.html}</div>
         `;
     }
 };

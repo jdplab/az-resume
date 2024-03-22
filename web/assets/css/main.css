@@ -286,6 +286,10 @@ article.col-6.col-12-xsmall.work-item.project-item.article-preview:hover {
 	cursor: pointer;
 }
 
+.fullpost img {
+	max-width: 100%;
+}
+
 /* Tags */
 
 ul.tags {
