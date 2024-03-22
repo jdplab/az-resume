@@ -20,7 +20,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(f"Error connecting to Blob Storage: {str(e)}", status_code=500)
 
     try:
-        query = "SELECT * FROM c ORDER BY c.timestamp DESC OFFSET 0 LIMIT 10"
+        query = "SELECT * FROM c WHERE c.id != 'last_post_number' ORDER BY c.timestamp DESC OFFSET 0 LIMIT 10"
         posts = list(container.query_items(
             query=query,
             enable_cross_partition_query=True
