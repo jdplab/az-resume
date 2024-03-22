@@ -276,8 +276,9 @@ div#main section#blogposts {
 /* Article-Preview */
 
 article.col-6.col-12-xsmall.work-item.project-item.article-preview {
-	padding: 0;
+	padding: 1em;
 	margin-left: 2.5em;
+	border-radius: .25em;
 }
 
 article.col-6.col-12-xsmall.work-item.project-item.article-preview:hover {

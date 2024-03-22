@@ -106,7 +106,7 @@ xhr.onreadystatechange = function () {
             }
 
             html += `
-                <a href="/blog.html?id=${post.id}"><article class="col-6 col-12-xsmall work-item project-item article-preview"></a>
+                <a href="/blog.html?id=${post.id}"><article class="col-6 col-12-xsmall work-item project-item article-preview">
                     <img src="${post.image_url}" alt="${post.title}" class="image fit">
                     <h3>${post.title}</h3>
                     <p>${formattedDate}</p>
@@ -114,7 +114,7 @@ xhr.onreadystatechange = function () {
                     <ul class="tags">
                         ${tagsHtml}
                     </ul>
-                </article>
+                </article></a>
             `;
         }
         document.getElementById('blogShortDescriptions').innerHTML = html;
