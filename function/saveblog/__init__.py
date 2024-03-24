@@ -28,13 +28,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
                     database = cosmos_client.get_database_client('resumedb')
                     container = database.get_container_client('blogposts')
-                    last_post_number = container.read_item(item='last_post_number', partition_key='last_post_number')['value']
+                    last_post_number = str(container.read_item(item='last_post_number', partition_key='last_post_number')['value'])
                 except cosmos_exceptions.CosmosResourceNotFoundError:
                     last_post_number = 0
                 except AzureError as e:
                     return func.HttpResponse(f"Error connecting to Cosmos DB: {str(e)}", status_code=500)
                 # Increment the post number and format it as a 4-digit string
-                post_id = str((last_post_number + 1).zfill(4))
+                post_id = str(last_post_number + 1).zfill(4)
                 # Update the last post number in Cosmos DB
                 container.upsert_item({'id': 'last_post_number', 'value': post_id})
                 # Get the current timestamp
