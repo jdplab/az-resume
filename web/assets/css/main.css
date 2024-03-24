@@ -294,7 +294,6 @@ article.col-6.col-12-xsmall.work-item.project-item.article-preview:hover {
 
 ul.tags {
 	display: flex;
-	margin: .25em;
 }
 
 /* Modal */
@@ -2867,6 +2866,7 @@ ul.jobtitle {
 			height: 2em;
 			line-height: 1.5em;
 			padding: 0 .5em;
+			margin: .25em;
 		}
 
 		input[type="submit"].small,
