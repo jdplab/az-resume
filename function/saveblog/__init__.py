@@ -28,7 +28,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
                     database = cosmos_client.get_database_client('resumedb')
                     container = database.get_container_client('blogposts')
-                    last_post_number = str(container.read_item(item='last_post_number', partition_key='last_post_number')['value'])
+                    last_post_number = int(container.read_item(item='last_post_number', partition_key='last_post_number')['value'])
                 except cosmos_exceptions.CosmosResourceNotFoundError:
                     last_post_number = 0
                 except AzureError as e:
