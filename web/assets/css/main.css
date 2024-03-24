@@ -273,19 +273,6 @@ div#main section#blogposts {
 	padding-top: 0;
 }
 
-/* Article-Preview */
-
-article.col-6.col-12-xsmall.work-item.project-item.article-preview {
-	padding: 1em;
-	margin-left: 0;
-	border-radius: 1em;
-}
-
-article.col-6.col-12-xsmall.work-item.project-item.article-preview:hover {
-	background-color: #e2e1e1;
-	cursor: pointer;
-}
-
 .fullpost img {
 	max-width: 100%;
 }
