@@ -278,7 +278,7 @@ div#main section#blogposts {
 article.col-6.col-12-xsmall.work-item.project-item.article-preview {
 	padding: 1em;
 	margin-left: 2.5em;
-	border-radius: .25em;
+	border-radius: 1em;
 }
 
 article.col-6.col-12-xsmall.work-item.project-item.article-preview:hover {
@@ -294,6 +294,7 @@ article.col-6.col-12-xsmall.work-item.project-item.article-preview:hover {
 
 ul.tags {
 	display: flex;
+	margin: .25em;
 }
 
 /* Modal */

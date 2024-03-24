@@ -53,11 +53,11 @@ function blogCreate() {
 };
 
 function savePost() {
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
+    const title = (document.getElementById('title').value).toString();
+    const description = (document.getElementById('description').value).toString();
     const image = document.getElementById('image').files[0];
-    const tags = document.getElementById('tags').value;
-    const html = tinymce.get('editor').getContent();
+    const tags = (document.getElementById('tags').value).toString();
+    const html = (tinymce.get('editor').getContent()).toString();
     let formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
