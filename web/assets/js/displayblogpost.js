@@ -116,7 +116,8 @@ xhr2.onreadystatechange = function () {
             var comment = comments[i];
 
             var date = new Date(comment.timestamp);
-            var formattedDate = date.toString();
+            var options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            var formattedDate = date.toLocaleString(navigator.language, options);
             var firstname = comment.firstname;
             var lastname = comment.lastname;
             var commentText = comment.comment;
