@@ -6,6 +6,7 @@ import uuid
 from datetime import datetime
 from verifytoken import verify_token
 import logging
+import pytz
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
