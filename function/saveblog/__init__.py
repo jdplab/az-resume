@@ -5,6 +5,7 @@ from azure.core.exceptions import AzureError
 import os
 from datetime import datetime
 from verifytoken import verify_token
+import pytz
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
@@ -38,7 +39,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 # Update the last post number in Cosmos DB
                 container.upsert_item({'id': 'last_post_number', 'value': post_id})
                 # Get the current timestamp
-                timestamp = datetime.now().isoformat()
+                now_utc = datetime.now(pytz.timezone('UTC'))
+                now_est = now_utc.astimezone(pytz.timezone('US/Eastern'))
+                timestamp = now_est.isoformat()
                 # Save these properties as a new item in Cosmos DB
                 container.upsert_item({'id': post_id, 'title': title, 'description': description, 'html': html, 'tags': tags, 'timestamp': timestamp})
                 if image:

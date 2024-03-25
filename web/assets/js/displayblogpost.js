@@ -112,23 +112,27 @@ xhr2.onreadystatechange = function () {
         var comments = JSON.parse(xhr2.responseText);
 
         var html = '';
-        for (var i = 0; i < comments.length; i++) {
-            var comment = comments[i];
+        if (comments.length === 0) {
+            html = '<p>Be the first to comment!</p>';
+        } else {
+            for (var i = 0; i < comments.length; i++) {
+                var comment = comments[i];
 
-            var date = new Date(comment.timestamp);
-            var options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            var formattedDate = date.toLocaleString(navigator.language, options);
-            var firstname = comment.firstname;
-            var lastname = comment.lastname;
-            var commentText = comment.comment;
+                var date = new Date(comment.timestamp);
+                var options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                var formattedDate = date.toLocaleString(navigator.language, options);
+                var firstname = comment.firstname;
+                var lastname = comment.lastname;
+                var commentText = comment.comment;
 
-            html += `
-                <div id="individual-comment" class="individual-comment">
-                    <h3>${firstname} ${lastname}</h3>
-                    <p>${formattedDate}</p>
-                    <p>${commentText}</p>
-                </div>
-            `;
+                html += `
+                    <div id="individual-comment" class="individual-comment">
+                        <h3>${firstname} ${lastname}</h3>
+                        <p>${formattedDate}</p>
+                        <p>${commentText}</p>
+                    </div>
+                `;
+            }
         }
         document.getElementById('comments').innerHTML = html;
     }
