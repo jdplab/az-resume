@@ -102,7 +102,7 @@ function commentSubmit() {
 }
 
 // Make an AJAX request to the Azure function
-var xhr = new XMLHttpRequest();
+var xhr2 = new XMLHttpRequest();
 xhr2.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getcomments?id=' + postId, true);
 xhr2.onreadystatechange = function () {
     if (xhr2.readyState == 4 && xhr2.status == 200) {
