@@ -45,7 +45,7 @@ def main(req: HttpRequest) -> HttpResponse:
                 return HttpResponse(json.dumps({"admin": True}), status_code=200, mimetype="application/json")
             else:
                 logging.info('User is not an admin.')
-                return HttpResponse(json.dumps("admin": False), status_code=200, mimetype="application/json")
+                return HttpResponse(json.dumps({"admin": False}), status_code=200, mimetype="application/json")
         else:
             logging.info('ID token not found in request headers.')
             return HttpResponse("No Authorization header provided", status_code=401)
