@@ -94,6 +94,9 @@ function commentSubmit() {
             submitCommentButton.style.visibility = 'hidden';
             submitCommentButton.style.display = 'none';
         }
+        setTimeout(function() {
+            location.reload();
+        }, 3000);
     })
     .catch(error => {
         console.error('There was an error!', error);
@@ -113,7 +116,7 @@ xhr2.onreadystatechange = function () {
             var comment = comments[i];
 
             var date = new Date(comment.timestamp);
-            var formattedDate = date.toDateString();
+            var formattedDate = date.toString();
             var firstname = comment.firstname;
             var lastname = comment.lastname;
             var commentText = comment.comment;
