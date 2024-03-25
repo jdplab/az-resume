@@ -283,6 +283,12 @@ section#editDelete {
 	opacity: 0;
 }
 
+section#fullBlogPost {
+	border-top: none;
+	margin: 0;
+	padding: 0;
+}
+
 /* Comments */
 
 div.individual-comment {

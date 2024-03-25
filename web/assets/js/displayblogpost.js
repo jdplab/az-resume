@@ -22,6 +22,12 @@ window.addEventListener('load', function() {
                     editdeletesection.style.visibility = 'visible';
                     editdeletesection.style.display = 'block';
                 }
+                var fullBlogPost = document.getElementById('fullBlogPost');
+                if (fullBlogPost) {
+                    fullBlogPost.style.padding = '4em 0 0 0';
+                    fullBlogPost.style.margin = '4em 0 0 0';
+                    fullBlogPost.style.borderTop = 'solid 2px #efefef';
+                }
             } else {
                 console.log('User is not an admin.');
             }
