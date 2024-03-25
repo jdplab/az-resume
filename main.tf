@@ -343,6 +343,15 @@ resource "azurerm_cosmosdb_sql_container" "blogposts" {
   throughput               = 400
 }
 
+resource "azurerm_cosmosdb_sql_container" "comments" {
+  name                     = "comments"
+  resource_group_name      = azurerm_resource_group.resume.name
+  account_name             = azurerm_cosmosdb_account.resume.name
+  database_name            = azurerm_cosmosdb_sql_database.resume.name
+  partition_key_path       = "/id"
+  throughput               = 400
+}
+
 resource "azurerm_application_insights" "resume" {
   name                     = "resumeappinsights"
   location                 = azurerm_resource_group.resume.location

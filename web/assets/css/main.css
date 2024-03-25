@@ -277,6 +277,25 @@ div#main section#blogposts {
 	max-width: 100%;
 }
 
+/* Comments */
+
+div.individual-comment {
+	border-bottom: solid 2px #efefef;
+	margin-bottom: 1em; 
+}
+
+button#submitComment {
+	opacity: 0;
+	visibility: hidden;
+	display: none;
+}
+
+form#newCommentForm {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+}
+
 /* Tags */
 
 ul.tags {

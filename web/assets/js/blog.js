@@ -111,9 +111,6 @@ xhr.onreadystatechange = function () {
                     <h3>${post.title}</h3>
                     <p>${formattedDate}</p>
                     <p>${post.description}</p>
-                    <ul class="tags">
-                        ${tagsHtml}
-                    </ul>
                 </article>
             `;
         }

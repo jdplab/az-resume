@@ -54,6 +54,13 @@
                 </section>
 
 				<section id="commentSection">
+					<h2 style="text-align: center;">Comments</h2>
+					<div id="comments"></div>
+					<button id="newComment" class="button" onclick="commentCreate()">Add Comment</button>
+					<form id="newCommentForm">
+						<input type="text" id="commentBox" placeholder="Type here..." style="margin: 1em;" required>
+					</form>
+					<button id="submitComment" class="button" onclick="commentSubmit()">Save</button>
 				</section>
 
 			</div>
