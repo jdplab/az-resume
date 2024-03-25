@@ -1,7 +1,7 @@
 import logging
 import http.client
 from azure.functions import HttpRequest, HttpResponse
-from jose import jwt, JWTError
+from jose import jwt
 import json
 
 def get_jwks():

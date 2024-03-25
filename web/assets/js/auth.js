@@ -117,7 +117,7 @@ window.addEventListener('load', function() {
         // Call the Azure Function to check if the user is an admin
         fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/verifytoken', {
             headers: {
-                'Authorization': sessionStorage.getItem('id_token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
             }
         })
         .then(response => response.json())
