@@ -103,10 +103,10 @@ function commentSubmit() {
 
 // Make an AJAX request to the Azure function
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getcomments?id=' + postId, true);
-xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        var comments = JSON.parse(xhr.responseText);
+xhr2.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getcomments?id=' + postId, true);
+xhr2.onreadystatechange = function () {
+    if (xhr2.readyState == 4 && xhr2.status == 200) {
+        var comments = JSON.parse(xhr2.responseText);
 
         var html = '';
         for (var i = 0; i < comments.length; i++) {
@@ -129,4 +129,4 @@ xhr.onreadystatechange = function () {
         document.getElementById('comments').innerHTML = html;
     }
 };
-xhr.send();
+xhr2.send();
