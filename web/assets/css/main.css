@@ -277,6 +277,12 @@ div#main section#blogposts {
 	max-width: 100%;
 }
 
+section#editDelete {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+}
+
 /* Comments */
 
 div.individual-comment {

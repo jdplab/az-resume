@@ -1,7 +1,119 @@
 var urlParams = new URLSearchParams(window.location.search);
 var postId = urlParams.get('id');
 
-// Make an AJAX request to the Azure function
+window.addEventListener('load', function() {
+    if (sessionStorage.getItem('id_token')) {
+        fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/verifytoken', {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.admin) {
+                var editdeletesection = document.getElementById('editDelete');
+                if (editdeletesection) {
+                    editdeletesection.style.opacity = '1';
+                    editdeletesection.style.visibility = 'visible';
+                    editdeletesection.style.display = 'block';
+                }
+            } else {
+                console.log('User is not an admin.');
+            }
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+    } else {
+        console.log('User is not logged in.');
+    }
+});
+
+function deletePost() {
+    fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/deletepost?id=' + postId, {
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        displayModal('Post deleted successfully');
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+};
+
+function editPost() {
+    fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/editpost?id=' + postId, {
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Initialize TinyMCE with the post data
+        tinymce.init({
+            selector: '#editPostBox',
+            min_height: 500,
+            resize: true,
+            menubar: 'file edit view insert format tools table help',
+            plugins: 'preview searchreplace autolink directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+            toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image media | table codesample | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview",
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px } img {max-width: 100%; height: auto;}',
+            toolbar_mode: 'wrap',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    editor.setContent(data.html);
+                });
+            }
+        });
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+};
+
+function editPostSave(){
+    var content = tinymce.get('editPostBox').getContent();
+    var formData = new FormData();
+    formData.append('html', content);
+    fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/editpostsave?id=' + postId, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        displayModal('Edit saved successfully');
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+};
+
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getpost?id=' + postId, true);
 xhr.onreadystatechange = function () {
@@ -104,7 +216,6 @@ function commentSubmit() {
     });
 }
 
-// Make an AJAX request to the Azure function
 var xhr2 = new XMLHttpRequest();
 xhr2.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getcomments?id=' + postId, true);
 xhr2.onreadystatechange = function () {

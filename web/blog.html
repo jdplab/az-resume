@@ -14,7 +14,7 @@
 		<meta name="description" content="Jonathan Polansky's resume. https://github.com/jdplab/az-resume"/>
 		<link rel="icon" href="images/terminal.ico">
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.3/dist/quill.snow.css" rel="stylesheet" />
+		<script src="https://cdn.tiny.cloud/1/q7648hvurw1lf6ch14apkg45x4hgmmklcvkiytmydm58iqyp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 	</head>
 	<body class="is-preload">
 
@@ -49,6 +49,13 @@
 
 		<!-- Main -->
 			<div id="main">
+
+				<section id="editDelete">
+					<button id="editButton" class="button" onclick="editPost()">Edit Post</button>
+					<button id="deleteButton" class="button" onclick="deletePost()">Delete Post</button>
+					<div id="editPostBox"></div>
+					<button id="saveEditButton" class="button" onclick="editPostSave()">Save Post</button>
+				</section>
 
 				<section id="fullBlogPost">
                 </section>
