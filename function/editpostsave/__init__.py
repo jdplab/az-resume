@@ -1,8 +1,6 @@
 import azure.functions as func
-from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
 from azure.cosmos import CosmosClient, exceptions as cosmos_exceptions
 from azure.core.exceptions import AzureError
-from datetime import datetime, timezone, timedelta
 import os
 import json
 from verifytoken import verify_token
@@ -25,12 +23,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                             cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
                             database = cosmos_client.get_database_client('resumedb')
                             container = database.get_container_client('blogposts')
+                            html = req.form.get('html')
                             post = container.read_item(item=post_id, partition_key=post_id)
+                            post['html'] = html
+                            container.upsert_item(body=post)
                         except cosmos_exceptions.CosmosResourceNotFoundError:
                             return func.HttpResponse("Post not found", status_code=404)
                         except AzureError as e:
                             return func.HttpResponse(f"Error connecting to Cosmos DB: {str(e)}", status_code=500)
-                        return func.HttpResponse(json.dumps(post), status_code=200)
+                        return func.HttpResponse("Edit saved successfully.", status_code=200)
                     else:
                         return func.HttpResponse("No id provided", status_code=400)
                 except Exception as e:
