@@ -214,6 +214,17 @@ function commentCreate() {
 function commentSubmit() {
     var form = document.getElementById("newCommentForm");
     var comment = document.getElementById("commentBox").value;
+    
+    //Input validation
+    if (!comment) {
+        console.error('Comment is required!');
+        return;
+    }
+    if (comment.length > 1000) {
+        console.error('Comment is too long!');
+        return;
+    }
+
     var formData = new FormData();
     formData.append('comment', comment);
     fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/submitComment?id=' + postId, {

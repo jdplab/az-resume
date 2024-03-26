@@ -7,6 +7,7 @@ from datetime import datetime
 from verifytoken import verify_token
 import logging
 import pytz
+import re
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
@@ -24,6 +25,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             lastname = token_claims.get('family_name')
             post_id = req.params.get('id')
             comment = req.form.get('comment')
+            comment = re.sub(r'[^\w\s.,!?;:]', '', comment)
             if not post_id:
                 return func.HttpResponse("Missing post id", status_code=400)
             if not comment:
