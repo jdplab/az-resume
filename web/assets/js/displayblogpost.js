@@ -54,6 +54,9 @@ function deletePost() {
     })
     .then(data => {
         displayModal('Post deleted successfully');
+        setTimeout(function() {
+            window.location.href = '/blog.html';
+        }, 3000);
     })
     .catch(error => {
         console.error('There was an error!', error);
@@ -120,6 +123,9 @@ function editPostSave(){
     })
     .then(data => {
         displayModal('Edit saved successfully');
+        setTimeout(function() {
+            location.reload();
+        }, 3000);
     })
     .catch(error => {
         console.error('There was an error!', error);

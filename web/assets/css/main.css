@@ -289,7 +289,7 @@ div#main section#fullBlogPost {
 	padding: 0;
 }
 
-section#fullBlogPost button#saveEditButton {
+section#editDelete button#saveEditButton {
 	display: none;
 	visibility: hidden;
 	opacity: 0;
