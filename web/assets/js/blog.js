@@ -79,6 +79,9 @@ function savePost() {
     })
     .then(data => {
         alert('Post saved successfully.');
+        setTimeout(function() {
+            window.location.href = '/blogindex.html';
+        }, 3000);
     })
     .catch(error => {
         console.error('Error:', error);

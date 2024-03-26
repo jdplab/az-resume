@@ -23,8 +23,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                             cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
                             database = cosmos_client.get_database_client('resumedb')
                             container = database.get_container_client('blogposts')
+                            title = req.form.get('title')
+                            description = req.form.get('description')
                             html = req.form.get('html')
                             post = container.read_item(item=post_id, partition_key=post_id)
+                            post['title'] = title
+                            post['description'] = description
                             post['html'] = html
                             container.upsert_item(body=post)
                         except cosmos_exceptions.CosmosResourceNotFoundError:

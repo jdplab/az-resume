@@ -56,7 +56,7 @@ function deletePost() {
         .then(data => {
             displayModal('Post deleted successfully');
             setTimeout(function() {
-                window.location.href = '/blog.html';
+                window.location.href = '/blogindex.html';
             }, 3000);
         })
         .catch(error => {
@@ -100,6 +100,20 @@ function editPost() {
             saveEditButton.style.visibility = 'visible';
             saveEditButton.style.display = 'block';
         }
+        var titleField = document.getElementById('titleField');
+        if (titleField) {
+            titleField.style.opacity = '1';
+            titleField.style.visibility = 'visible';
+            titleField.style.display = 'block';
+            titleField.value = data.title;
+        }
+        var descriptionField = document.getElementById('descriptionField');
+        if (descriptionField) {
+            descriptionField.style.opacity = '1';
+            descriptionField.style.visibility = 'visible';
+            descriptionField.style.display = 'block';
+            descriptionField.value = data.description;
+        }
     })
     .catch(error => {
         console.error('There was an error!', error);
@@ -108,8 +122,12 @@ function editPost() {
 
 function editPostSave(){
     var content = tinymce.get('editPostBox').getContent();
+    var title = document.getElementById('titleField').value;
+    var description = document.getElementById('descriptionField').value;
     var formData = new FormData();
     formData.append('html', content);
+    formData.append('title', title);
+    formData.append('description', description);
     fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/editpostsave?id=' + postId, {
         method: 'POST',
         headers: {
