@@ -41,25 +41,27 @@ window.addEventListener('load', function() {
 });
 
 function deletePost() {
-    fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/deletepost?id=' + postId, {
-        headers: {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(data => {
-        displayModal('Post deleted successfully');
-        setTimeout(function() {
-            window.location.href = '/blog.html';
-        }, 3000);
-    })
-    .catch(error => {
-        console.error('There was an error!', error);
+    displayDialogueModal('Are you sure you want to delete this post?', function() {
+        fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/deletepost?id=' + postId, {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('id_token')
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(data => {
+            displayModal('Post deleted successfully');
+            setTimeout(function() {
+                window.location.href = '/blog.html';
+            }, 3000);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
     });
 };
 
