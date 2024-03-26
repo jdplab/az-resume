@@ -283,10 +283,17 @@ section#editDelete {
 	opacity: 0;
 }
 
-section#fullBlogPost {
+div#main section#fullBlogPost {
 	border-top: none;
 	margin: 0;
 	padding: 0;
+}
+
+section#fullBlogPost button#saveEditButton {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+	margin-top: 1em;
 }
 
 /* Comments */

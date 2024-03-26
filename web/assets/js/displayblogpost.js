@@ -89,6 +89,12 @@ function editPost() {
                 });
             }
         });
+        var saveEditButton = document.getElementById('saveEditButton');
+        if (saveEditButton) {
+            saveEditButton.style.opacity = '1';
+            saveEditButton.style.visibility = 'visible';
+            saveEditButton.style.display = 'block';
+        }
     })
     .catch(error => {
         console.error('There was an error!', error);
