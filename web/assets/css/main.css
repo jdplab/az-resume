@@ -411,16 +411,12 @@ ul.tags {
 		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		border-right: solid 3px #efefef;
-		border-left: solid 3px #efefef;
 		border-bottom: solid 3px #efefef;
 	}
 
 	#navbar a:hover {
 		background-color: #efefef;
 		color: #49bf9d;
-		border-right: solid 3px #49bf9d;
-		border-left: solid 3px #49bf9d;
 		border-bottom: solid 3px #49bf9d;
 	  }
 
@@ -465,16 +461,12 @@ ul.tags {
 		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		border-right: solid 3px #efefef;
-		border-left: solid 3px #efefef;
 		border-bottom: solid 3px #efefef;
 	}
 
 	#navbar a:hover {
 		background-color: #efefef;
 		color: #49bf9d;
-		border-right: solid 3px #49bf9d;
-		border-left: solid 3px #49bf9d;
 		border-bottom: solid 3px #49bf9d;
 	  }
 
