@@ -152,6 +152,10 @@ function editPostSave(){
     });
 };
 
+document.getElementById('fullBlogPost').innerHTML = `
+    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+`;
+
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getpost?id=' + postId, true);
 xhr.onreadystatechange = function () {
