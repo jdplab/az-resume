@@ -49,6 +49,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                             blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
                             image_blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), post_id + '.jpg')
                             image_blob_client.delete_blob()
+
+                            # Delete the HTML file
+                            html_blob_client = blob_service_client.get_blob_client(os.getenv('WEB_CONTAINER'), 'posts/' + post_id + '.html')
+                            html_blob_client.delete_blob()
                         except AzureError as e:
                             return func.HttpResponse(f"Error deleting image: {str(e)}", status_code=500)
 
