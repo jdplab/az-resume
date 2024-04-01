@@ -23,7 +23,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 description = req.form.get('description')
                 html = req.form.get('html')
                 image = req.files.get('image')
-                tags = req.files.get('tags')
+                tags = req.form.get('tags')
                 # Get the last post number from Cosmos DB
                 try:
                     cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
