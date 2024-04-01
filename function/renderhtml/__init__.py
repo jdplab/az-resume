@@ -26,7 +26,8 @@ def main(documents: func.DocumentList, context: func.Context) -> str:
                 continue
 
             try:
-                blob_client.upload_blob(html, blob_type="BlockBlob", content_settings=ContentSettings(content_type='text/html'), overwrite=True)
+                cnt_settings = ContentSettings(content_type='text/html')
+                blob_client.upload_blob(html, blob_type="BlockBlob", content_settings=cnt_settings, overwrite=True)
             except AzureError as e:
                 context.log.error(f"Error saving HTML page in Azure Blob Storage: {str(e)}")
                 continue
