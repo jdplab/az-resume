@@ -121,6 +121,18 @@ function editPost() {
             tagsField.style.display = 'block';
             tagsField.value = data.tags;
         }
+        var editButton = document.getElementById('editButton');
+        if (editButton) {
+            editButton.style.opacity = '0';
+            editButton.style.visibility = 'hidden';
+            editButton.style.display = 'none';
+        }
+        var deleteButton = document.getElementById('deleteButton');
+        if (deleteButton) {
+            deleteButton.style.opacity = '0';
+            deleteButton.style.visibility = 'hidden';
+            deleteButton.style.display = 'none';
+        }
     })
     .catch(error => {
         console.error('There was an error!', error);
