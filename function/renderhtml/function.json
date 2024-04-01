@@ -4,13 +4,12 @@
     "bindings": [
       {
         "type": "cosmosDBTrigger",
-        "name": "documents",
         "direction": "in",
-        "leaseCollectionName": "leases",
-        "connectionStringSetting": "resumedb1_DOCUMENTDB",
+        "name": "documents",
+        "connection": "resumedb1_DOCUMENTDB",
         "databaseName": "resumedb",
-        "collectionName": "blogposts",
-        "createLeaseCollectionIfNotExists": true
+        "containerName": "blogposts",
+        "createLeaseContainerIfNotExists": true
       }
     ]
   }
