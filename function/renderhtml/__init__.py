@@ -37,7 +37,6 @@ def main(documents: func.DocumentList, context: func.Context) -> str:
         return
 
 def render_html_page(post):
-    tags = ",".join(post['tags'])
     return f"""
 <!DOCTYPE HTML>
 <html lang="en">
