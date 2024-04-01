@@ -1,0 +1,13 @@
+{
+    "scriptFile": "__init__.py",
+    "disabled": false,
+    "bindings": [
+        {
+            "name": "posts",
+            "type": "blobTrigger",
+            "direction": "in",
+            "path": "$web/posts/{name}",
+            "connection":"STORAGE_CONNECTIONSTRING"
+        }
+    ]
+}

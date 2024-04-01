@@ -383,6 +383,10 @@ resource "azurerm_linux_function_app" "resume" {
     "STORAGE_CONNECTIONSTRING" = azurerm_storage_account.resume.primary_connection_string
     "BLOGPOSTS_CONTAINER"  = azurerm_storage_container.blogposts.name
     "WEB_CONTAINER"        = "$web"
+    "SUBSCRIPTION_ID"      = data.azuread_client_config.current.subscription_id
+    "RESOURCE_GROUP_NAME"  = azurerm_resource_group.resume.name
+    "PROFILE_NAME"         = azurerm_cdn_profile.resume.name
+    "ENDPOINT_NAME"        = azurerm_cdn_endpoint.resume.name
   }
 
   site_config {
