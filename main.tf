@@ -139,6 +139,67 @@ resource "azurerm_cdn_endpoint" "resume" {
     }
 }
 
+resource "azurerm_storage_container_sas" "blogposts_sas" {
+  connection_string = azurerm_storage_account.storage_account.primary_connection_string
+  container_name    = azurerm_storage_container.blogposts.name
+
+  start                    = "2024-01-01"
+  expiry                   = "2025-01-01"
+
+  permissions {
+    read                   = true
+    add                    = false
+    create                 = false
+    write                  = false
+    delete                 = false
+    list                   = false
+  }
+}
+
+resource "azurerm_cdn_endpoint" "blogposts" {
+  name                     = "blogposts-cdn-endpoint"
+  profile_name             = azurerm_cdn_profile.resume.name
+  resource_group_name      = azurerm_resource_group.resume.name
+  location                 = azurerm_resource_group.resume.location
+  origin_host_header       = "${azurerm_storage_account.storage_account.primary_blob_host}?${azurerm_storage_container_sas.blogposts_sas.sas}"
+    origin {
+      name                 = "blogposts-origin"
+      host_name            = "${azurerm_storage_account.storage_account.primary_blob_host}/${azurerm_storage_container.blogposts.name}"
+    }
+
+    delivery_rule {
+      name                 = "RedirectToHTTPS"
+      order                = 1
+
+      request_scheme_condition {
+        operator           = "Equal"
+        match_values       = ["HTTP"]
+      }
+
+      url_redirect_action {
+        redirect_type      = "Found"
+        protocol           = "Https"
+      }
+    }
+
+    delivery_rule {
+      name                 = "CallbackRedirect"
+      order                = 2
+
+      url_path_condition {
+        operator           = "EndsWith"
+        match_values       = ["/.auth/login/aadb2c/callback"]
+      }
+
+      url_redirect_action {
+        redirect_type      = "Found"
+        protocol           = "Https"
+        hostname           = var.DOMAIN_NAME
+        path               = "/callback.html"
+      }
+    }
+}
+
 data "azurerm_aadb2c_directory" "resume" {
   resource_group_name      = azurerm_resource_group.resume.name
   domain_name              = "azresume.onmicrosoft.com"

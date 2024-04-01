@@ -110,7 +110,7 @@ xhr.onreadystatechange = function () {
 
             html += `
                 <article class="col-6 col-12-xsmall work-item project-item">
-                <a href="/blog.html?id=${post.id}" class="image fit thumb"><img src="${post.image_url}" alt="${post.title}" /></a>
+                <a href="/${post.id}.html" class="image fit thumb"><img src="${post.image_url}" alt="${post.title}" /></a>
                     <h3>${post.title}</h3>
                     <p>${formattedDate}</p>
                     <p>${post.description}</p>

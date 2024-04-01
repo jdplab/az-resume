@@ -152,19 +152,19 @@ function editPostSave(){
     });
 };
 
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getpost?id=' + postId, true);
-xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        var response = JSON.parse(xhr.responseText);
-        var data = response.data;
-
-        document.getElementById('fullBlogPost').innerHTML = `
-            <div class="fullpost">${data.html}</div>
-        `;
-    }
-};
-xhr.send();
+//var xhr = new XMLHttpRequest();
+//xhr.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getpost?id=' + postId, true);
+//xhr.onreadystatechange = function () {
+//    if (xhr.readyState == 4 && xhr.status == 200) {
+//        var response = JSON.parse(xhr.responseText);
+//        var data = response.data;
+//
+//        document.getElementById('fullBlogPost').innerHTML = `
+//            <div class="fullpost">${data.html}</div>
+//        `;
+//    }
+//};
+//xhr.send();
 
 function commentCreate() {
     if (sessionStorage.getItem('id_token')) {

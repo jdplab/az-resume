@@ -1,0 +1,16 @@
+{
+    "scriptFile": "__init__.py",
+    "disabled": false,
+    "bindings": [
+      {
+        "type": "cosmosDBTrigger",
+        "name": "documents",
+        "direction": "in",
+        "leaseCollectionName": "leases",
+        "connectionStringSetting": "resumedb1_DOCUMENTDB",
+        "databaseName": "resumedb",
+        "collectionName": "blogposts",
+        "createLeaseCollectionIfNotExists": true
+      }
+    ]
+  }
