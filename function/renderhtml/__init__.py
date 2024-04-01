@@ -20,7 +20,7 @@ def main(documents: func.DocumentList, context: func.Context) -> str:
 
             try:
                 blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
-                blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), post['id'] + '.html')
+                blob_client = blob_service_client.get_blob_client(os.getenv('WEB_CONTAINER'), 'posts/' + post['id'] + 'blogpost.html')
             except Exception as e:
                 context.log.error(f"Error getting environment variables or creating Blob client: {str(e)}")
                 continue
