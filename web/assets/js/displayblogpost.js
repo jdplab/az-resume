@@ -1,5 +1,5 @@
-var urlParams = new URLSearchParams(window.location.search);
-var postId = urlParams.get('id');
+var pathArray = window.location.pathname.split('/');
+var postId = pathArray[pathArray.length - 1].replace('.html', '');
 
 window.addEventListener('load', function() {
     if (sessionStorage.getItem('id_token')) {
