@@ -139,20 +139,20 @@ resource "azurerm_cdn_endpoint" "resume" {
     }
 }
 
-resource "azurerm_storage_container_sas" "blogposts_sas" {
-  connection_string = azurerm_storage_account.storage_account.primary_connection_string
-  container_name    = azurerm_storage_container.blogposts.name
-
+data "azurerm_storage_account_blob_container_sas" "blogposts" {
+  connection_string        = azurerm_storage_account.resume.primary_connection_string
+  container_name           = azurerm_storage_container.blogposts.name
+  https_only               = true
   start                    = "2024-01-01"
   expiry                   = "2025-01-01"
 
   permissions {
-    read                   = true
-    add                    = false
-    create                 = false
-    write                  = false
-    delete                 = false
-    list                   = false
+    read   = true
+    add    = false
+    create = false
+    write  = false
+    delete = false
+    list   = false
   }
 }
 
@@ -161,7 +161,7 @@ resource "azurerm_cdn_endpoint" "blogposts" {
   profile_name             = azurerm_cdn_profile.resume.name
   resource_group_name      = azurerm_resource_group.resume.name
   location                 = azurerm_resource_group.resume.location
-  origin_host_header       = "${azurerm_storage_account.storage_account.primary_blob_host}?${azurerm_storage_container_sas.blogposts_sas.sas}"
+  origin_host_header       = "${azurerm_storage_account.storage_account.primary_blob_host}?${data.azurerm_storage_account_blob_container_sas.blogposts.sas}"
     origin {
       name                 = "blogposts-origin"
       host_name            = "${azurerm_storage_account.storage_account.primary_blob_host}/${azurerm_storage_container.blogposts.name}"
