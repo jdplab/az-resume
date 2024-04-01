@@ -296,7 +296,7 @@ section#editDelete button#saveEditButton {
 	margin-top: 2em;
 }
 
-section#editDelete input#titleField, section#editDelete input#descriptionField {
+section#editDelete input#titleField, section#editDelete input#descriptionField, section#editDelete input#tagsField {
 	display: none;
 	visibility: hidden;
 	opacity: 0;

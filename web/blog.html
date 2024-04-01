@@ -55,6 +55,7 @@
 					<button id="deleteButton" class="button" onclick="deletePost()">Delete Post</button>
 					<input type="text" id="titleField" style="margin: 1em;">
 					<input type="text" id="descriptionField" style="margin: 1em;">
+					<input type="text" id="tagsField" style="margin: 1em;">
 					<div id="editPostBox"></div>
 					<button id="saveEditButton" class="button" onclick="editPostSave()">Save Post</button>
 				</section>
@@ -64,7 +65,9 @@
 
 				<section id="commentSection">
 					<h2 style="text-align: center;">Comments</h2>
-					<div id="comments"></div>
+					<div id="comments">
+						<div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+					</div>
 					<button id="newComment" class="button" onclick="commentCreate()">Add Comment</button>
 					<form id="newCommentForm">
 						<input type="text" id="commentBox" placeholder="Type here..." style="margin: 1em;" required>

@@ -103,11 +103,6 @@ xhr.onreadystatechange = function () {
             var date = new Date(post.timestamp);
             var formattedDate = date.toDateString();
 
-            var tagsHtml = '';
-            for (var j = 0; j < post.tags.length; j++) {
-                tagsHtml += (j > 0 ? ' ' : '') + '<li class="button blogposttag">' + post.tags[j] + '</li>';
-            }
-
             html += `
                 <article class="col-6 col-12-xsmall work-item project-item">
                 <a href="/posts/${post.id}.html" class="image fit thumb"><img src="${post.image_url}" alt="${post.title}" /></a>

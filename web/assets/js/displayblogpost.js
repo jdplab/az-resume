@@ -114,6 +114,13 @@ function editPost() {
             descriptionField.style.display = 'block';
             descriptionField.value = data.description;
         }
+        var tagsField = document.getElementById('tagsField');
+        if (tagsField) {
+            tagsField.style.opacity = '1';
+            tagsField.style.visibility = 'visible';
+            tagsField.style.display = 'block';
+            tagsField.value = data.tags;
+        }
     })
     .catch(error => {
         console.error('There was an error!', error);
@@ -124,10 +131,12 @@ function editPostSave(){
     var content = tinymce.get('editPostBox').getContent();
     var title = document.getElementById('titleField').value;
     var description = document.getElementById('descriptionField').value;
+    var tags = document.getElementById('tagsField').value;
     var formData = new FormData();
     formData.append('html', content);
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('tags', tags);
     fetch('https://jpolanskyresume-functionapp.azurewebsites.net/api/editpostsave?id=' + postId, {
         method: 'POST',
         headers: {

@@ -26,10 +26,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                             title = req.form.get('title')
                             description = req.form.get('description')
                             html = req.form.get('html')
+                            tags = req.form.get('tags')
                             post = container.read_item(item=post_id, partition_key=post_id)
                             post['title'] = title
                             post['description'] = description
                             post['html'] = html
+                            post['tags'] = tags
                             container.upsert_item(body=post)
                         except cosmos_exceptions.CosmosResourceNotFoundError:
                             return func.HttpResponse("Post not found", status_code=404)
