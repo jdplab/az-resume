@@ -1,5 +1,5 @@
 import azure.functions as func
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobServiceClient, ContentSettings
 from azure.core.exceptions import AzureError
 import os
 
@@ -26,7 +26,7 @@ def main(documents: func.DocumentList, context: func.Context) -> str:
                 continue
 
             try:
-                blob_client.upload_blob(html, overwrite=True)
+                blob_client.upload_blob(html, blob_type="BlockBlob", content_settings=ContentSettings(content_type='text/html'), overwrite=True)
             except AzureError as e:
                 context.log.error(f"Error saving HTML page in Azure Blob Storage: {str(e)}")
                 continue
