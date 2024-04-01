@@ -161,10 +161,10 @@ resource "azurerm_cdn_endpoint" "blogposts" {
   profile_name             = azurerm_cdn_profile.resume.name
   resource_group_name      = azurerm_resource_group.resume.name
   location                 = azurerm_resource_group.resume.location
-  origin_host_header       = "${azurerm_storage_account.storage_account.primary_blob_host}?${data.azurerm_storage_account_blob_container_sas.blogposts.sas}"
+  origin_host_header       = "${azurerm_storage_account.resume.primary_blob_host}?${data.azurerm_storage_account_blob_container_sas.blogposts.sas}"
     origin {
       name                 = "blogposts-origin"
-      host_name            = "${azurerm_storage_account.storage_account.primary_blob_host}/${azurerm_storage_container.blogposts.name}"
+      host_name            = "${azurerm_storage_account.resume.primary_blob_host}/${azurerm_storage_container.blogposts.name}"
     }
 
     delivery_rule {
