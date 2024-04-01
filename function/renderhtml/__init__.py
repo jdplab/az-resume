@@ -85,6 +85,7 @@ def render_html_page(post):
                 <button id="deleteButton" class="button" onclick="deletePost()">Delete Post</button>
                 <input type="text" id="titleField" style="margin: 1em;">
                 <input type="text" id="descriptionField" style="margin: 1em;">
+                <input type="text" id="tagsField" style="margin: 1em;">
                 <div id="editPostBox"></div>
                 <button id="saveEditButton" class="button" onclick="editPostSave()">Save Post</button>
             </section>
