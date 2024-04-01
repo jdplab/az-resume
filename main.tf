@@ -367,6 +367,9 @@ resource "azurerm_service_plan" "resume" {
   sku_name                 = "Y1"
 }
 
+data "azurerm_subscription" "current" {
+}
+
 resource "azurerm_linux_function_app" "resume" {
   name                     = "jpolanskyresume-functionapp"
   location                 = azurerm_resource_group.resume.location
@@ -383,7 +386,7 @@ resource "azurerm_linux_function_app" "resume" {
     "STORAGE_CONNECTIONSTRING" = azurerm_storage_account.resume.primary_connection_string
     "BLOGPOSTS_CONTAINER"  = azurerm_storage_container.blogposts.name
     "WEB_CONTAINER"        = "$web"
-    "SUBSCRIPTION_ID"      = data.azuread_client_config.current.subscription_id
+    "SUBSCRIPTION_ID"      = data.azurerm_subscription.current.subscription_id
     "RESOURCE_GROUP_NAME"  = azurerm_resource_group.resume.name
     "PROFILE_NAME"         = azurerm_cdn_profile.resume.name
     "ENDPOINT_NAME"        = azurerm_cdn_endpoint.resume.name
