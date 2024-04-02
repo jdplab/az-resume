@@ -38,7 +38,7 @@ const getVisitCount = () => {
                 fetchVisitCount(repeatVisit, resolve, reject);
             }
         } else {
-            console.log('Local storage is not supported by this browser');
+            console.log('Local storage or session storage is not supported by this browser');
             fetchVisitCount(repeatVisit, resolve, reject);
         }
     });
@@ -67,3 +67,10 @@ const fetchVisitCount = (repeatVisit, resolve, reject) => {
         reject(error);
     });
 };
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    getVisitCount()
+    .catch(error => {
+        console.log('Error getting visit count:', error);
+    });
+});
