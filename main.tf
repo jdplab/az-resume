@@ -370,18 +370,28 @@ resource "azurerm_service_plan" "resume" {
 data "azurerm_subscription" "current" {
 }
 
-data "azuread_service_principal" "current" {
-  display_name = "Terraform"
+resource "azuread_application" "functionapp" {
+  display_name             = "functionapp"
+}
+
+resource "azuread_service_principal" "functionapp" {
+  client_id                = azuread_application.functionapp.client_id
+}
+
+resource "azurerm_role_assignment" "functionapp" {
+  scope                    = azurerm_resource_group.resume.id
+  role_definition_name     = "Contributor"
+  principal_id             = azuread_service_principal.functionapp.object_id
 }
 
 resource "time_rotating" "semi-annually" {
-  rotation_days = 180
+  rotation_days            = 180
 }
 
-resource "azuread_service_principal_password" "current" {
-  service_principal_id = data.azuread_service_principal.current.object_id
-  rotate_when_changed = {
-    rotation = time_rotating.semi-annually.id
+resource "azuread_service_principal_password" "functionapp" {
+  service_principal_id     = data.azuread_service_principal.functionapp.object_id
+  rotate_when_changed      = {
+    rotation               = time_rotating.semi-annually.id
   }
 }
 
@@ -405,9 +415,9 @@ resource "azurerm_linux_function_app" "resume" {
     "RESOURCE_GROUP_NAME"  = azurerm_resource_group.resume.name
     "PROFILE_NAME"         = azurerm_cdn_profile.resume.name
     "ENDPOINT_NAME"        = azurerm_cdn_endpoint.resume.name
-    "AZURE_CLIENT_ID"      = data.azuread_service_principal.current.client_id
+    "AZURE_CLIENT_ID"      = azuread_service_principal.functionapp.client_id
     "AZURE_TENANT_ID"      = data.azuread_client_config.current.tenant_id
-    "AZURE_CLIENT_SECRET"  = azuread_service_principal_password.current.value
+    "AZURE_CLIENT_SECRET"  = azuread_service_principal_password.functionapp.value
   }
 
   site_config {
