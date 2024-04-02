@@ -303,6 +303,14 @@ section#editDelete input#titleField, section#editDelete input#descriptionField, 
 	margin: 2em;
 }
 
+/* Search Bar */
+
+section#blogposts input#searchBar {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+}
+
 /* Comments */
 
 div.individual-comment {

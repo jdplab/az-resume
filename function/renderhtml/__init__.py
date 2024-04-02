@@ -46,7 +46,7 @@ def render_html_page(post):
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta http-equiv="content-type" content="text/html"/>
         <meta name="keywords" content="{post['tags']}"/>
-        <meta name="description" content="{post['title']}"/>
+        <meta name="description" content="{post['description']}"/>
         <meta name="author" content="Jonathan Polansky"/>
         <link rel="icon" href="/images/terminal.ico">
 		<link rel="stylesheet" href="/assets/css/main.css" />

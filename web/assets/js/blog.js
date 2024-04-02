@@ -89,30 +89,48 @@ function savePost() {
     });
 }
 
-// Make an AJAX request to the Azure function
+var posts = [];
+
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://jpolanskyresume-functionapp.azurewebsites.net/api/getrecentposts', true);
 xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
-        var posts = JSON.parse(xhr.responseText);
-
-        var html = '';
-        for (var i = 0; i < posts.length; i++) {
-            var post = posts[i];
-
-            var date = new Date(post.timestamp);
-            var formattedDate = date.toDateString();
-
-            html += `
-                <article class="col-6 col-12-xsmall work-item project-item">
-                <a href="/posts/${post.id}.html" class="image fit thumb"><img src="${post.image_url}" alt="${post.title}" /></a>
-                    <h3>${post.title}</h3>
-                    <p>${formattedDate}</p>
-                    <p>${post.description}</p>
-                </article>
-            `;
-        }
-        document.getElementById('blogShortDescriptions').innerHTML = html;
+        posts = JSON.parse(xhr.responseText);
+        displayPosts(posts);
     }
 };
 xhr.send();
+
+function displayPosts(postsToDisplay) {
+    var html = '';
+    for (var i = 0; i < postsToDisplay.length; i++) {
+        var post = postsToDisplay[i];
+
+        var date = new Date(post.timestamp);
+        var formattedDate = date.toDateString();
+
+        html += `
+            <article class="col-6 col-12-xsmall work-item project-item">
+            <a href="/posts/${post.id}.html" class="image fit thumb"><img src="${post.image_url}" alt="${post.title}" /></a>
+                <h3>${post.title}</h3>
+                <p>${formattedDate}</p>
+                <p>${post.description}</p>
+            </article>
+        `;
+    }
+    document.getElementById('blogShortDescriptions').innerHTML = html;
+    searchBar = document.getElementById('searchBar');
+    if (searchBar) {
+        searchBar.style.opacity = '1';
+        searchBar.style.visibility = 'visible';
+        searchBar.style.display = 'block';
+    }
+}
+
+function searchBlog() {
+    var searchText = document.getElementById('searchBar').value.toLowerCase();
+    var filteredPosts = posts.filter(function(post) {
+        return post.title.toLowerCase().includes(searchText) || post.description.toLowerCase().includes(searchText);
+    });
+    displayPosts(filteredPosts);
+}
