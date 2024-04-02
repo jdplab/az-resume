@@ -389,7 +389,7 @@ resource "time_rotating" "semi-annually" {
 }
 
 resource "azuread_service_principal_password" "functionapp" {
-  service_principal_id     = data.azuread_service_principal.functionapp.object_id
+  service_principal_id     = azuread_service_principal.functionapp.object_id
   rotate_when_changed      = {
     rotation               = time_rotating.semi-annually.id
   }
