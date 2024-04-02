@@ -371,7 +371,7 @@ data "azurerm_subscription" "current" {
 }
 
 data "azuread_service_principal" "current" {
-  display_name = "terraform"
+  display_name = "Terraform"
 }
 
 resource "time_rotating" "semi-annually" {
