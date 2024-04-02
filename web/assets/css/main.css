@@ -309,6 +309,7 @@ section#blogposts input#searchBar {
 	display: none;
 	visibility: hidden;
 	opacity: 0;
+	margin-bottom: 2em;
 }
 
 /* Comments */

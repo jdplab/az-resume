@@ -129,8 +129,9 @@ function displayPosts(postsToDisplay) {
 
 function searchBlog() {
     var searchText = document.getElementById('searchBar').value.toLowerCase();
+    var sanitizedSearchText = encodeURIComponent(searchText);
     var filteredPosts = posts.filter(function(post) {
-        return post.title.toLowerCase().includes(searchText) || post.description.toLowerCase().includes(searchText);
+        return post.title.toLowerCase().includes(sanitizedSearchText) || post.description.toLowerCase().includes(sanitizedSearchText);
     });
     displayPosts(filteredPosts);
 }
