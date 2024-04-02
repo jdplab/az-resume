@@ -370,6 +370,21 @@ resource "azurerm_service_plan" "resume" {
 data "azurerm_subscription" "current" {
 }
 
+data "azuread_service_principal" "current" {
+  display_name = "terraform"
+}
+
+resource "time_rotating" "semi-annually" {
+  rotation_days = 180
+}
+
+resource "azuread_service_principal_password" "current" {
+  service_principal_id = data.azuread_service_principal.current.object_id
+  rotate_when_changed = {
+    rotation = time_rotating.semi-annually.id
+  }
+}
+
 resource "azurerm_linux_function_app" "resume" {
   name                     = "jpolanskyresume-functionapp"
   location                 = azurerm_resource_group.resume.location
@@ -390,6 +405,9 @@ resource "azurerm_linux_function_app" "resume" {
     "RESOURCE_GROUP_NAME"  = azurerm_resource_group.resume.name
     "PROFILE_NAME"         = azurerm_cdn_profile.resume.name
     "ENDPOINT_NAME"        = azurerm_cdn_endpoint.resume.name
+    "AZURE_CLIENT_ID"      = data.azuread_service_principal.current.client_id
+    "AZURE_TENANT_ID"      = data.azuread_client_config.current.tenant_id
+    "AZURE_CLIENT_SECRET"  = azuread_service_principal_password.current.value
   }
 
   site_config {
