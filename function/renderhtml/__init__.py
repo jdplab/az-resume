@@ -91,7 +91,7 @@ def render_html_page(post):
                 <button id="saveEditButton" class="button" onclick="editPostSave()">Save Post</button>
             </section>
             <section id="fullBlogPost">
-                <h2>{post['title']}</h2>
+                <h2 style="text-align: center;">{post['title']}</h2>
                 {post['html']}
             </section>
             <section id="commentSection">
