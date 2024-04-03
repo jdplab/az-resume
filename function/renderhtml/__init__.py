@@ -9,6 +9,7 @@ def main(documents: func.DocumentList, context: func.Context) -> str:
         for doc in documents:
             try:
                 post = doc.to_dict()
+                logging.info(f"Post after conversion to dictionary: {post}")
             except Exception as e:
                 logging.error(f"Error converting document to dictionary: {str(e)}")
                 return
