@@ -9,27 +9,33 @@ def main(documents: func.DocumentList, context: func.Context) -> str:
         for doc in documents:
             try:
                 post = doc.to_dict()
+                logging.info(f"Post after conversion to dictionary: {post}")
             except Exception as e:
-                return func.HttpResponse(f"Error converting document to dictionary: {str(e)}", status_code=500)
+                logging.error(f"Error converting document to dictionary: {str(e)}")
+                return
             
             try:
                 html = render_html_page(post)
             except Exception as e:
-                return func.HttpResponse(f"Error rendering HTML page: {str(e)}", status_code=500)
+                logging.error(f"Error rendering HTML page: {str(e)}")
+                return
 
             try:
                 blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
                 blob_client = blob_service_client.get_blob_client(os.getenv('WEB_CONTAINER'), 'posts/' + post['id'] + '.html')
             except Exception as e:
-                return func.HttpResponse(f"Error getting environment variables or creating Blob client: {str(e)}", status_code=500)
+                logging.error(f"Error getting environment variables or creating Blob client: {str(e)}")
+                return
 
             try:
                 cnt_settings = ContentSettings(content_type='text/html')
                 blob_client.upload_blob(html, blob_type="BlockBlob", content_settings=cnt_settings, overwrite=True)
             except AzureError as e:
-                return func.HttpResponse(f"Error saving HTML page in Azure Blob Storage: {str(e)}", status_code=500)
+                logging.error(f"Error saving HTML page in Azure Blob Storage: {str(e)}")
+                return
 
-        return func.HttpResponse("HTML page generated and saved in Azure Blob Storage", status_code=200)
+        logging.info("HTML page generated and saved in Azure Blob Storage")
+        return
 
 def render_html_page(post):
     return f"""
