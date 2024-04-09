@@ -10,7 +10,7 @@ permissions:
 jobs:
   terraform:
     name: "Terraform"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     defaults:
       run:

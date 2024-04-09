@@ -12,7 +12,7 @@ permissions:
 jobs:
   Push_Web_to_Azure_Storage_and_Purge_CDN:
     name: "Push_Web_to_Azure_Storage_and_Purge_CDN"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v4
     - uses: azure/login@v2
