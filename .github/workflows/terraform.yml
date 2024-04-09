@@ -25,10 +25,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       
-    - name: Update variables.auto.tfvars
-      run: |
-        echo "GIT_COMMIT_ID = \"${{ github.sha }}\"" > variables.auto.tfvars
-
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
