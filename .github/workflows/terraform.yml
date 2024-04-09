@@ -29,6 +29,11 @@ jobs:
       run: |
         echo "GIT_COMMIT_ID = \"${{ github.sha }}\"" > variables.auto.tfvars
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '21'
+    
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
