@@ -15,6 +15,7 @@ jobs:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v4
+    - uses: pietrobolcato/install-azure-cli-action@main
     - uses: azure/login@v2
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
