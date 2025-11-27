@@ -307,7 +307,7 @@ resource "azurerm_cosmosdb_account" "resume" {
   resource_group_name      = azurerm_resource_group.resume.name
   location                 = azurerm_resource_group.resume.location
   offer_type               = "Standard"
-  enable_free_tier         = true
+  free_tier_enabled        = true
 
   geo_location {
     location               = "eastus"
