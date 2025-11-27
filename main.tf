@@ -13,7 +13,7 @@ terraform {
   required_providers {
     azurerm = {
       source               = "hashicorp/azurerm"
-      version              = "3.94.0"
+      version              = "4.54.0"
     }
 
     cloudflare = {
@@ -296,9 +296,9 @@ resource "azurerm_cdn_endpoint_custom_domain" "resume" {
   name                     = "resume-cdn-endpoint-custom-domain"
   cdn_endpoint_id          = azurerm_cdn_endpoint.resume.id
   host_name                = var.DOMAIN_NAME
-    
+
     user_managed_https {
-      key_vault_secret_id = azurerm_key_vault_certificate.resume.secret_id
+      key_vault_secret_id = azurerm_key_vault_certificate.resume.versionless_secret_id
     }
 }
 
@@ -352,10 +352,19 @@ resource "azurerm_cosmosdb_sql_container" "comments" {
   throughput               = 400
 }
 
+resource "azurerm_log_analytics_workspace" "resume" {
+  name                     = "resume-log-analytics"
+  location                 = azurerm_resource_group.resume.location
+  resource_group_name      = azurerm_resource_group.resume.name
+  sku                      = "PerGB2018"
+  retention_in_days        = 30
+}
+
 resource "azurerm_application_insights" "resume" {
   name                     = "resumeappinsights"
   location                 = azurerm_resource_group.resume.location
   resource_group_name      = azurerm_resource_group.resume.name
+  workspace_id             = azurerm_log_analytics_workspace.resume.id
   application_type         = "web"
   }
 
