@@ -415,7 +415,7 @@ resource "azurerm_linux_function_app" "resume" {
   builtin_logging_enabled  = false
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
-    "resumedb1_DOCUMENTDB" = azurerm_cosmosdb_account.resume.connection_string
+    "resumedb1_DOCUMENTDB" = azurerm_cosmosdb_account.resume.primary_sql_connection_string
     "SENDGRID_API_KEY"     = var.SENDGRID_API_KEY
     "STORAGE_CONNECTIONSTRING" = azurerm_storage_account.resume.primary_connection_string
     "BLOGPOSTS_CONTAINER"  = azurerm_storage_container.blogposts.name
