@@ -330,7 +330,7 @@ resource "azurerm_cosmosdb_sql_container" "resume" {
   resource_group_name      = azurerm_resource_group.resume.name
   account_name             = azurerm_cosmosdb_account.resume.name
   database_name            = azurerm_cosmosdb_sql_database.resume.name
-  partition_key_path       = "/id"
+  partition_key_paths      = ["/id"]
   throughput               = 400
 }
 
@@ -339,7 +339,7 @@ resource "azurerm_cosmosdb_sql_container" "blogposts" {
   resource_group_name      = azurerm_resource_group.resume.name
   account_name             = azurerm_cosmosdb_account.resume.name
   database_name            = azurerm_cosmosdb_sql_database.resume.name
-  partition_key_path       = "/id"
+  partition_key_paths      = ["/id"]
   throughput               = 400
 }
 
@@ -348,7 +348,7 @@ resource "azurerm_cosmosdb_sql_container" "comments" {
   resource_group_name      = azurerm_resource_group.resume.name
   account_name             = azurerm_cosmosdb_account.resume.name
   database_name            = azurerm_cosmosdb_sql_database.resume.name
-  partition_key_path       = "/id"
+  partition_key_paths      = ["/id"]
   throughput               = 400
 }
 
@@ -415,7 +415,7 @@ resource "azurerm_linux_function_app" "resume" {
   builtin_logging_enabled  = false
   app_settings             = {
     "FUNCTIONS_WORKER_RUNTIME" = "python"
-    "resumedb1_DOCUMENTDB" = azurerm_cosmosdb_account.resume.connection_strings[0]
+    "resumedb1_DOCUMENTDB" = azurerm_cosmosdb_account.resume.connection_string
     "SENDGRID_API_KEY"     = var.SENDGRID_API_KEY
     "STORAGE_CONNECTIONSTRING" = azurerm_storage_account.resume.primary_connection_string
     "BLOGPOSTS_CONTAINER"  = azurerm_storage_container.blogposts.name
