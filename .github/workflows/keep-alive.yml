@@ -2,9 +2,12 @@ name: Keep Repository Active
 
 on:
   schedule:
-    # Run every 50 days (well before the 60-day cutoff)
-    - cron: "0 12 */50 * *"
+    # Run on the 1st and 15th of every month (roughly every 2 weeks)
+    - cron: "0 12 1,15 * *"
   workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
 
 jobs:
   keep-alive:
