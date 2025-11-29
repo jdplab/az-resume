@@ -434,7 +434,7 @@ resource "azurerm_linux_function_app" "resume" {
     application_insights_key = azurerm_application_insights.resume.instrumentation_key
 
     application_stack {
-      python_version       = "3.9"
+      python_version       = "3.11"
     }
 
     cors {
