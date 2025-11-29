@@ -6,6 +6,13 @@ from datetime import datetime, timezone, timedelta
 import os
 import json
 
+def extract_account_key(connection_string):
+    """Extract AccountKey from Azure Storage connection string"""
+    for part in connection_string.split(';'):
+        if part.startswith('AccountKey='):
+            return part.split('=', 1)[1]
+    return None
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         cosmos_client = CosmosClient.from_connection_string(os.getenv('resumedb1_DOCUMENTDB'))
@@ -15,7 +22,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(f"Error connecting to Cosmos DB: {str(e)}", status_code=500)
 
     try:
-        blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
+        storage_conn_string = os.getenv('STORAGE_CONNECTIONSTRING')
+        blob_service_client = BlobServiceClient.from_connection_string(storage_conn_string)
+        account_key = extract_account_key(storage_conn_string)
     except AzureError as e:
         return func.HttpResponse(f"Error connecting to Blob Storage: {str(e)}", status_code=500)
 
@@ -36,7 +45,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 blob_service_client.account_name,
                 os.getenv('BLOGPOSTS_CONTAINER'),
                 image_blob_client.blob_name,
-                account_key=blob_service_client.credential.account_key,
+                account_key=account_key,
                 permission=BlobSasPermissions(read=True),
                 expiry=datetime.now(timezone.utc) + timedelta(minutes=20)
             )

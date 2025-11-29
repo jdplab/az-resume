@@ -6,6 +6,13 @@ from datetime import datetime, timezone, timedelta
 from verifytoken import verify_token
 import os
 
+def extract_account_key(connection_string):
+    """Extract AccountKey from Azure Storage connection string"""
+    for part in connection_string.split(';'):
+        if part.startswith('AccountKey='):
+            return part.split('=', 1)[1]
+    return None
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Processing request...')
     try:
@@ -21,13 +28,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             if payload.get('extension_CanEdit') == "1":
                 # Generate a SAS for the blob
                 try:
-                    blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
+                    storage_conn_string = os.getenv('STORAGE_CONNECTIONSTRING')
+                    blob_service_client = BlobServiceClient.from_connection_string(storage_conn_string)
+                    account_key = extract_account_key(storage_conn_string)
                     blob_client = blob_service_client.get_blob_client('admin', 'newblog.html')
                     sas_token = generate_blob_sas(
                         blob_service_client.account_name,
                         blob_client.container_name,
                         blob_client.blob_name,
-                        account_key=blob_service_client.credential.account_key,
+                        account_key=account_key,
                         permission=BlobSasPermissions(read=True),
                         expiry=datetime.now(timezone.utc) + timedelta(hours=1)
                     )
