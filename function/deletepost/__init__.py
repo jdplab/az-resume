@@ -57,17 +57,22 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                         except AzureError as e:
                             return func.HttpResponse(f"Error connecting to Cosmos DB: {str(e)}", status_code=500)
 
+                        blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
+
+                        # Delete the image (non-critical - may not exist)
                         try:
-                            # Delete the image
-                            blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
                             image_blob_client = blob_service_client.get_blob_client(os.getenv('BLOGPOSTS_CONTAINER'), post_id + '.jpg')
                             image_blob_client.delete_blob()
+                        except AzureError:
+                            # Image deletion failed, but continue
+                            pass
 
-                            # Delete the HTML file
+                        # Delete the HTML file (critical)
+                        try:
                             html_blob_client = blob_service_client.get_blob_client(os.getenv('WEB_CONTAINER'), 'posts/' + post_id + '.html')
                             html_blob_client.delete_blob()
                         except AzureError as e:
-                            return func.HttpResponse(f"Error deleting image: {str(e)}", status_code=500)
+                            return func.HttpResponse(f"Error deleting HTML file: {str(e)}", status_code=500)
 
                         # Return a success response
                         return func.HttpResponse("Post, image and associated comments deleted successfully", status_code=200)
