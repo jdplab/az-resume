@@ -9,32 +9,38 @@ def main(documents: func.DocumentList, context: func.Context) -> str:
         for doc in documents:
             try:
                 post = doc.to_dict()
-                logging.info(f"Post after conversion to dictionary: {post}")
+                logging.info(f"Processing document with id: {post.get('id')}")
             except Exception as e:
                 logging.error(f"Error converting document to dictionary: {str(e)}")
-                return
-            
+                continue  # Skip this document and continue with next
+
+            # Skip non-post documents (like 'last_post_number')
+            if post.get('id') == 'last_post_number' or 'title' not in post:
+                logging.info(f"Skipping non-post document: {post.get('id')}")
+                continue  # Skip this document and continue with next
+
             try:
                 html = render_html_page(post)
             except Exception as e:
-                logging.error(f"Error rendering HTML page: {str(e)}")
-                return
+                logging.error(f"Error rendering HTML page for post {post.get('id')}: {str(e)}")
+                continue  # Skip this document and continue with next
 
             try:
                 blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
                 blob_client = blob_service_client.get_blob_client(os.getenv('WEB_CONTAINER'), 'posts/' + post['id'] + '.html')
             except Exception as e:
-                logging.error(f"Error getting environment variables or creating Blob client: {str(e)}")
-                return
+                logging.error(f"Error getting environment variables or creating Blob client for post {post.get('id')}: {str(e)}")
+                continue  # Skip this document and continue with next
 
             try:
                 cnt_settings = ContentSettings(content_type='text/html')
                 blob_client.upload_blob(html, blob_type="BlockBlob", content_settings=cnt_settings, overwrite=True)
+                logging.info(f"Successfully generated HTML for post: {post['id']}")
             except AzureError as e:
-                logging.error(f"Error saving HTML page in Azure Blob Storage: {str(e)}")
-                return
+                logging.error(f"Error saving HTML page in Azure Blob Storage for post {post.get('id')}: {str(e)}")
+                continue  # Skip this document and continue with next
 
-        logging.info("HTML page generated and saved in Azure Blob Storage")
+        logging.info("Finished processing all documents")
         return
 
 def render_html_page(post):
