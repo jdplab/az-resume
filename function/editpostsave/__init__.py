@@ -1,9 +1,13 @@
 import azure.functions as func
 from azure.cosmos import CosmosClient, exceptions as cosmos_exceptions
 from azure.core.exceptions import AzureError
+from azure.storage.blob import BlobServiceClient
 import os
 import json
 from verifytoken import verify_token
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared_code.cache_utils import invalidate_cache
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
@@ -33,6 +37,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                             post['html'] = html
                             post['tags'] = tags
                             container.upsert_item(body=post)
+
+                            # Invalidate posts cache since we edited a post
+                            try:
+                                blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
+                                blog_container = blob_service_client.get_container_client(os.getenv('BLOGPOSTS_CONTAINER'))
+                                invalidate_cache(blog_container, 'posts')
+                            except Exception as cache_error:
+                                # Log but don't fail - cache invalidation is not critical
+                                pass
+
                         except cosmos_exceptions.CosmosResourceNotFoundError:
                             return func.HttpResponse("Post not found", status_code=404)
                         except AzureError as e:

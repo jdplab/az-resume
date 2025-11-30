@@ -38,3 +38,4 @@ terraform.rc
 # Ignore function testing directories
 .venv
 .vscode
+backups

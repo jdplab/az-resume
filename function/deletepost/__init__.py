@@ -4,6 +4,9 @@ from azure.core.exceptions import AzureError
 import azure.functions as func
 from verifytoken import verify_token
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared_code.cache_utils import invalidate_multiple_caches
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
@@ -39,6 +42,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                             if comments:
                                 for comment in comments:
                                     comment_container.delete_item(item=comment['id'], partition_key=comment['id'])
+
+                            # Invalidate both posts cache and comments cache for this post
+                            try:
+                                blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
+                                blog_container = blob_service_client.get_container_client(os.getenv('BLOGPOSTS_CONTAINER'))
+                                invalidate_multiple_caches(blog_container, ['posts', f'comments-{post_id}'])
+                            except Exception as cache_error:
+                                # Log but don't fail - cache invalidation is not critical
+                                pass
+
                         except cosmos_exceptions.CosmosResourceNotFoundError:
                             return func.HttpResponse("Post or comments not found", status_code=404)
                         except AzureError as e:

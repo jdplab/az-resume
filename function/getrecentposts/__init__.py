@@ -5,6 +5,9 @@ from azure.core.exceptions import AzureError
 from datetime import datetime, timezone, timedelta
 import os
 import json
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared_code.cache_utils import get_cached_data, save_cached_data
 
 def extract_account_key(connection_string):
     """Extract AccountKey from Azure Storage connection string"""
@@ -24,18 +27,27 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         storage_conn_string = os.getenv('STORAGE_CONNECTIONSTRING')
         blob_service_client = BlobServiceClient.from_connection_string(storage_conn_string)
+        blog_container = blob_service_client.get_container_client(os.getenv('BLOGPOSTS_CONTAINER'))
         account_key = extract_account_key(storage_conn_string)
     except AzureError as e:
         return func.HttpResponse(f"Error connecting to Blob Storage: {str(e)}", status_code=500)
 
-    try:
-        query = "SELECT * FROM c WHERE c.id != 'last_post_number' ORDER BY c.timestamp DESC"
-        posts = list(container.query_items(
-            query=query,
-            enable_cross_partition_query=True
-        ))
-    except cosmos_exceptions.CosmosQueryError as e:
-        return func.HttpResponse(f"Error querying Cosmos DB: {str(e)}", status_code=500)
+    # Try to get cached posts first
+    cached_posts = get_cached_data(blog_container, 'posts')
+    if cached_posts is not None:
+        posts = cached_posts
+    else:
+        # Cache miss - query CosmosDB
+        try:
+            query = "SELECT * FROM c WHERE c.id != 'last_post_number' ORDER BY c.timestamp DESC"
+            posts = list(container.query_items(
+                query=query,
+                enable_cross_partition_query=True
+            ))
+            # Save to cache for next request
+            save_cached_data(blog_container, 'posts', posts)
+        except cosmos_exceptions.CosmosQueryError as e:
+            return func.HttpResponse(f"Error querying Cosmos DB: {str(e)}", status_code=500)
 
     for post in posts:
         post_id = post['id']

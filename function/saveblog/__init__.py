@@ -6,6 +6,9 @@ import os
 from datetime import datetime
 from verifytoken import verify_token
 import pytz
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared_code.cache_utils import invalidate_cache
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
@@ -44,6 +47,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 timestamp = now_est.isoformat()
                 # Save these properties as a new item in Cosmos DB
                 container.upsert_item({'id': post_id, 'title': title, 'description': description, 'html': html, 'tags': tags, 'timestamp': timestamp})
+
+                # Invalidate posts cache since we added a new post
+                try:
+                    blob_service_client = BlobServiceClient.from_connection_string(os.getenv('STORAGE_CONNECTIONSTRING'))
+                    blog_container = blob_service_client.get_container_client(os.getenv('BLOGPOSTS_CONTAINER'))
+                    invalidate_cache(blog_container, 'posts')
+                except Exception as cache_error:
+                    # Log but don't fail - cache invalidation is not critical
+                    pass
+
                 if image:
                     # Save the image in Blob Storage
                     try:
