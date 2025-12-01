@@ -62,7 +62,11 @@ function login() {
 // Function to handle logout
 function logout() {
     clearToken();
-    window.location.href = '/logoff.html';
+
+    // Logout from Azure AD B2C to end the SSO session
+    const logoutUrl = 'https://azresume.b2clogin.com/azresume.onmicrosoft.com/B2C_1_SignUpSignIn/oauth2/v2.0/logout?post_logout_redirect_uri=' + encodeURIComponent('https://jon-polansky.com/logoff.html');
+
+    window.location.href = logoutUrl;
 }
 
 // Function to handle the authentication callback

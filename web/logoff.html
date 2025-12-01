@@ -42,6 +42,9 @@
 
             <script>
                 window.onload = function() {
+                    // Clear any remaining tokens when Azure AD B2C redirects back here
+                    clearToken();
+
                     setTimeout(function() {
                         window.location.href = '/';
                     }, 3000);

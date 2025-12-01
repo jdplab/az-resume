@@ -1,7 +1,7 @@
 import logging
 import http.client
 from azure.functions import HttpRequest, HttpResponse
-from jose import jwt
+from jose import jwt, JWTError
 import json
 
 def get_jwks():
@@ -25,7 +25,13 @@ def verify_token(id_token):
                 'e': key['e']
             }
     expected_audience = '8437bac7-4641-445c-83f2-20a4105108b5'
-    token_claims = jwt.decode(id_token, rsa_key, algorithms=['RS256'], audience=expected_audience)
+    token_claims = jwt.decode(
+        id_token,
+        rsa_key,
+        algorithms=['RS256'],
+        audience=expected_audience,
+        options={"verify_exp": True}
+    )
     return token_claims
 
 def main(req: HttpRequest) -> HttpResponse:
@@ -37,9 +43,12 @@ def main(req: HttpRequest) -> HttpResponse:
             try:
                 logging.info('ID token found in request headers.')
                 token_claims = verify_token(id_token)
+            except JWTError as e:
+                logging.warning(f'JWT validation failed: {str(e)}')
+                return HttpResponse("Invalid or expired token", status_code=401)
             except Exception as e:
-                logging.error(f'Error verifying token: {str(e)}')
-                return HttpResponse(f"Error verifying token: {str(e)}", status_code=400)
+                logging.error(f'Unexpected error during token verification: {str(e)}')
+                return HttpResponse("Authentication error", status_code=500)
             if token_claims.get('extension_CanEdit') == "1":
                 logging.info('User has admin rights.')
                 return HttpResponse(json.dumps({"admin": True}), status_code=200, mimetype="application/json")
